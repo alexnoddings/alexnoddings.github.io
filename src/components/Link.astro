@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+const { href, class: className, ...props } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[className, "text-mist", "hover:text-gradient-r hover:from-lavender hover:to-orchid"]}
+  {...props}
+>
+  <slot />
+</a>

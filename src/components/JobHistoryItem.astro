@@ -1,0 +1,65 @@
+---
+interface Title {
+  name: string;
+  start: string;
+  end?: string;
+}
+
+interface Props {
+  titles: Title[];
+  company: string;
+  techs: string[];
+  summaries: string[];
+  slug: string;
+}
+
+const { titles, company, techs, summaries, slug } = Astro.props;
+---
+
+<a
+  href={"/resume/" + slug}
+  class="link-not-text group/job-item grid grid-cols-12 gap-2 rounded-md px-6 py-5 transition-all hover:bg-lavender/5 hover:!opacity-100 group-hover/job-history:opacity-50 motion-reduce:group-hover/job-history:opacity-100"
+>
+  <div class="col-span-3 text-sm">
+    {titles.at(-1)?.start}
+    {titles[0].end && <> — {titles[0].end}</>}
+  </div>
+  <div class="col-span-9">
+    <div class="flex flex-row gap-2 font-header">
+      <div class="link-text flex-1 text-mist">
+        {titles[0].name} @ {company}
+      </div>
+      <span
+        class="group-hover/job-item:text-gradient-r px-2 py-0.5 transition-transform group-hover/job-item:translate-x-1 group-hover/job-item:from-lavender group-hover/job-item:to-orchid motion-reduce:group-hover/job-item:translate-x-0"
+      >
+        →
+      </span>
+    </div>
+    {
+      titles.length > 1 && (
+        <div class="mb-1">
+          {titles.slice(1).map((title) => (
+            <div class="text-sm">{title.name}</div>
+          ))}
+        </div>
+      )
+    }
+    <ul class="job-summary flex flex-col gap-1 pb-2 pt-1" role="list">
+      {summaries.map((summary) => <li>{summary}</li>)}
+    </ul>
+    <ul class="flex flex-row flex-wrap gap-2" role="list">
+      {
+        techs.map((tech) => (
+          <li class="rounded-full bg-lavender/10 px-2 py-1 text-xs text-lavender">{tech}</li>
+        ))
+      }
+    </ul>
+  </div>
+</a>
+
+<style>
+  .job-summary li::before {
+    content: "‣";
+    @apply mr-1;
+  }
+</style>

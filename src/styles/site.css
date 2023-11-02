@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Atkinson";
+  src:
+    local(""),
+    url("/fonts/atkinson-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson";
+  src:
+    local(""),
+    url("/fonts/atkinson-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src:
+    local(""),
+    url("/fonts/space-grotesk-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+  }
+
+  .text-gradient-r {
+    @apply text-gradient bg-gradient-to-r;
+  }
+}
+
+*::selection {
+  @apply bg-lavender/40;
+}
+
+@media (prefers-reduced-motion) {
+  .transition-all,
+  .transition,
+  .transition-colors,
+  .transition-opacity,
+  .transition-shadow,
+  .transition-transform {
+    transition-property: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  a,
+  .link-text {
+    @apply underline;
+  }
+  a:hover,
+  .link-text:hover {
+    @apply decoration-underline-thick bg-none text-mist !important;
+  }
+  a.link-not-text {
+    @apply no-underline;
+  }
+}

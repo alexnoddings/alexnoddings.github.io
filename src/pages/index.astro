@@ -1,0 +1,111 @@
+---
+import { getCollection } from "astro:content";
+import JobHistoryItem from "../components/JobHistoryItem.astro";
+import Link from "../components/Link.astro";
+import ColumnsLayout from "../layouts/ColumnsLayout.astro";
+import Footer from "../components/Footer.astro";
+import ProjectItem from "../components/ProjectItem.astro";
+
+const positions = (await getCollection("resume")).sort((pos1, pos2) => pos2.data.id - pos1.data.id);
+---
+
+<ColumnsLayout
+  links={[
+    { title: "About", href: "#about" },
+    { title: "Résumé", href: "#resume" },
+    { title: "Projects", href: "#projects" },
+  ]}
+>
+  <section id="about" class="leading-loose lg:pt-20">
+    <h2 class="font-header text-lg text-mist">About me</h2>
+    <p class="mb-6 mt-2">
+      I wrote my first lines of code back in 2011 in
+      <Link href="https://www.lua.org/about.html">Lua</Link>
+       using modding tools available for
+      <Link href="https://wiki.facepunch.com/gmod/Beginner_Tutorial_Intro">Garry's Mod</Link>
+       and
+      <Link href="https://tweaked.cc/">Minecraft</Link>. Being given the reigns to create whatever I liked got
+      me hooked on programming.
+    </p>
+    <p class="mb-6">
+      Fast forward to today, and I'm a senior full stack developer at a fantastic British software
+      consultancy. I focus on building rich, interactive LoB web applications for clients, and leading
+      technical innovation in our cloud apps department. Our typical tech stack involves
+      <Link href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Blazor</Link>,
+      <Link href="https://learn.microsoft.com/en-us/aspnet/core/">ASP.NET Core</Link>,
+      <Link href="https://learn.microsoft.com/en-us/ef/core/">EF Core</Link>, and
+      <Link href="https://azure.microsoft.com/en-gb">Azure</Link>.
+    </p>
+    <p>
+      When I'm not clicking away at my desk, I enjoy walking and running, playing video and tabletop games, a
+      good pint of cider, and listening to music. Actually, I listen to a *lot* of music at my desk too.
+    </p>
+  </section>
+  <section id="resume" class="pt-10 lg:pt-20">
+    <h2 class="flex-1 font-header text-lg text-mist">Résumé</h2>
+    <p class="text-sm">Please note my public résumé is partially redacted.</p>
+    <p class="text-sm">
+      I also have a
+      <Link href="resume/alexnoddings.pdf">PDF version</Link>
+       available.
+    </p>
+    <ol class="group/job-history mt-4 flex flex-col">
+      {
+        positions.map((position) => (
+          <li>
+            <JobHistoryItem
+              titles={position.data.titles}
+              company={position.data.company}
+              techs={position.data.techs}
+              summaries={position.data.summaries}
+              slug={position.slug}
+            />
+          </li>
+        ))
+      }
+    </ol>
+    <div class="mt-3 flex justify-center">
+      <a
+        href="resume/alexnoddings.pdf"
+        class="hover:text-gradient-r link-not-text group px-3 py-1 text-mist hover:from-turquoise hover:to-lavender"
+      >
+        <span class="link-text">View full résumé</span>
+        <span class="ml-1 font-header"> →</span>
+      </a>
+    </div>
+  </section>
+  <section id="projects" class="mt-8">
+    <h2 class="mb-4 font-header text-lg text-mist">Projects</h2>
+    <ol class="group/projects mt-4 flex flex-col">
+      <li>
+        <ProjectItem
+          title="Tyne"
+          techs={[".NET", "Blazor", "ASP.NET Core", "Entity Framework Core", "NuGet"]}
+          href="https://github.com/alexnoddings/Tyne"
+        >
+          A set of C# packages designed to make line-of-business apps in Blazor more efficiently.
+        </ProjectItem>
+      </li>
+      <li>
+        <ProjectItem
+          title="alexnoddings.com"
+          techs={["Astro", "Tailwind", "HTML/CSS"]}
+          href="https://github.com/alexnoddings/alexnoddings.github.io/"
+        >
+          This website! Part résumé, part portfolio. Created with Tailwind CSS and Astro.
+        </ProjectItem>
+      </li>
+      <li>
+        <ProjectItem
+          title="Quibble"
+          techs={[".NET", "Blazor WASM", "SignalR", "ASP.NET Core", "Entity Framework Core"]}
+          href="https://github.com/alexnoddings/Quibble"
+        >
+          Interactive real-time quiz website using Blazor and SignalR. Built and used during Covid for game
+          nights with friends.
+        </ProjectItem>
+      </li>
+    </ol>
+  </section>
+  <Footer class="mt-16" />
+</ColumnsLayout>

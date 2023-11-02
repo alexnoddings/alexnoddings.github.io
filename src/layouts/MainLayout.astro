@@ -1,0 +1,43 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead />
+  </head>
+  <body class="relative m-0 min-h-screen bg-violet p-0 font-body text-base text-smoke">
+    <div id="bg-dotted"></div>
+    <div class="mx-auto max-w-screen-xl px-16">
+      <slot />
+    </div>
+    <style is:global>
+      #bg-dotted {
+        @apply fixed inset-0 -z-20;
+        @apply bg-violet;
+        background-image: radial-gradient(
+            farthest-corner circle at var(--bg-cover-x, -50vw) var(--bg-cover-y, -50vh),
+            transparent 80px,
+            #0f172acc 160px
+          ),
+          radial-gradient(#94a3b8bb 1px, transparent 0), radial-gradient(#94a3b870 1px, transparent 0);
+        background-size:
+          100% 100%,
+          40px 40px,
+          40px 40px;
+        background-position:
+          0px 0px,
+          20px 20px,
+          0 0;
+      }
+    </style>
+    <script>
+      let bg = document.querySelector("#bg-dotted") as HTMLDivElement;
+      window.addEventListener("mousemove", (e) => {
+        bg?.style.setProperty("--bg-cover-x", e.clientX + "px");
+        bg?.style.setProperty("--bg-cover-y", e.clientY + "px");
+      });
+    </script>
+  </body>
+</html>

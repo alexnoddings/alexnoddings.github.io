@@ -1,0 +1,57 @@
+---
+// Import the site.css file here so that it is included on
+// all pages through the use of the <BaseHead /> component.
+import "../styles/site.css";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const title = "Alex Noddings";
+const description =
+  "Senior full stack developer architecting and building complex web apps with .NET, Blazor, ASP.NET Core, and Azure.";
+const image = "/meta/og.png";
+---
+
+<!-- Global metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/meta/favicon.svg" />
+
+<!-- Font preloads -->
+<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
+<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<link rel="preload" href="/fonts/space-grotesk-bold.woff" as="font" type="font/woff" crossorigin />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="image" content={new URL(image, Astro.url)} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:site_name" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:locale" content="en_GB" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Icons -->
+<link rel="icon" type="image/png" sizes="512x192" href="/meta/android-chrome-512x512.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/meta/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/meta/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/meta/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/meta/apple-touch-icon.png" />
+<link rel="manifest" href="/meta/site.webmanifest" />
+<meta name="msapplication-TileColor" content="#721CD4" />
+<meta name="theme-color" content="#721CD4" />

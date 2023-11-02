@@ -1,0 +1,365 @@
+---
+import EmailIcon from "../../../components/icons/EmailIcon.astro";
+import GitHubIcon from "../../../components/icons/GitHubIcon.astro";
+import LinkedInIcon from "../../../components/icons/LinkedInIcon.astro";
+import WebIcon from "../../../components/icons/WebIcon.astro";
+import { pdf_config } from "./pdf-config";
+import "../../../styles/site.css";
+
+const default_config = {
+  isPublic: true,
+  emailAddress: null,
+  university: {
+    name: "University",
+  },
+  summer1: {
+    company: "Industry",
+  },
+  summer23: {
+    company: "Industry",
+  },
+  grad: {
+    company: "Engineering",
+    start: "2020",
+    end: "2021",
+  },
+  consultancy: {
+    company: "Consultancy",
+    junior: {
+      start: "2021",
+      end: "2021",
+    },
+    mid: {
+      start: "2021",
+      end: "2023",
+    },
+    senior: {
+      start: "2023",
+      end: "Present",
+    },
+  },
+};
+
+const config = pdf_config ?? default_config;
+---
+
+<!doctype html>
+<html lang="en">
+  <head></head>
+  <body class="mx-10 mb-6 mt-12 flex flex-col gap-12 font-body text-pdf-base text-slate">
+    <div class="flex flex-row gap-6">
+      <div class="w-2/3">
+        <h1>Alex Noddings</h1>
+        <p class="mt-6 pr-28">
+          Senior full stack developer architecting and building complex web apps with .NET, Blazor, ASP.NET
+          Core, and Azure.
+        </p>
+      </div>
+      <div class="w-1/3 pt-4">
+        <ul class="links-list">
+          {
+            config.emailAddress != null && (
+              <li>
+                <a href={"mailto:" + config.emailAddress}>
+                  <EmailIcon width={14} height={14} />
+                  <span>{config.emailAddress}</span>
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a href="https://linkedin.com/in/alexnoddings">
+              <LinkedInIcon width={14} height={14} />
+              <span>linkedin.com/in/alexnoddings</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/alexnoddings">
+              <GitHubIcon width={14} height={14} />
+              <span>github.com/alexnoddings</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://alexnoddings.com">
+              <WebIcon width={14} height={14} />
+              <span>alexnoddings.com</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-row gap-6">
+      <div class="panel-left w-2/3">
+        <h2>Experience</h2>
+        {config.isPublic && <p class="-mt-2 mb-4">Please note my public resume is partially redacted</p>}
+        <div class="job">
+          <div class="titles">
+            <h3>
+              <span class="title">Senior Developer</span>
+              <span class="company">@ {config.consultancy.company ?? "Consultancy"}</span>
+              <span class="period">{config.consultancy.senior.start} - {config.consultancy.senior.end}</span>
+            </h3>
+            <h4>
+              <span class="title">Developer</span>
+              <span class="period">{config.consultancy.mid.start} - {config.consultancy.mid.end}</span>
+            </h4>
+            <h4>
+              <span class="title">Junior Developer</span>
+              <span class="period">{config.consultancy.junior.start} - {config.consultancy.junior.end}</span>
+            </h4>
+          </div>
+          <ul class="info">
+            <li>
+              Architect and deliver high-quality, bespoke, robust systems for a range of clients primarily in
+              ASP.NET Core, Blazor, and React
+            </li>
+            <li>
+              Provide technical leadership within the cloud apps team by exploring new technology,
+              implementing best practices, and constantly striving to improve our processes and workflows
+            </li>
+            <li>Run technical interviews for new devs, and design and manage our technical test system</li>
+            <li>
+              Collaborate with clients and other developers to discover and fulfill business requirements
+            </li>
+            <li>Maintain existing and legacy systems to ensure clients face minimal disruption</li>
+          </ul>
+        </div>
+        <div class="job">
+          <div class="titles">
+            <h3>
+              <span class="title">Graduate Developer</span>
+              <span class="company">@ {config.grad.company ?? "Engineering"}</span>
+              <span class="period">{config.grad.start} - {config.grad.end}</span>
+            </h3>
+          </div>
+          <ul class="info">
+            <li>Migrated internal systems from an EoL version of Access to a new SQL backend</li>
+            <li>
+              Optimised their existing database, unlocking up to 100x performance benefits on complex,
+              long-running queries
+            </li>
+            <li>Independently identified manual processes across the business which could be automated</li>
+            <li>
+              Abstracted an existing piece of embedded software to run in a simulation, allowing engineers to
+              more rapidly prototype alterations and changes to the product and control code
+            </li>
+            <li>
+              Trained engineers in Python scripting to help them automate tasks and better design their
+              embedded code
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <div class="titles">
+            <h3>
+              <span class="title">Summer Placement Developer</span>
+              <span class="company">@ {config.summer23.company}</span>
+              <span class="period">Summer 2018/2019</span>
+            </h3>
+          </div>
+          <ul class="info">
+            <li>Developing existing desktop applications using C# & WPF</li>
+            <li>Designing and creating internal web systems in C#, ASP.NET Core, & Blazor on Azure</li>
+            <li>
+              Meeting with customers from across the business to identify and prioritise their business
+              requirements
+            </li>
+            <li>
+              Collaborated with other developers to produce high-quality systems to streamline business
+              processes
+            </li>
+            <li>Ported a 20+ year old Access/VB system to SQL Server</li>
+          </ul>
+        </div>
+        <div class="job">
+          <div class="titles">
+            <h3>
+              <span class="title">Service Desk Analyst</span>
+              <span class="company">@ {config.summer1.company}</span>
+              <span class="period">Summer 2017</span>
+            </h3>
+          </div>
+          <ul class="info">
+            <li>
+              Worked with users from across the globe to resolve technical issues quickly and efficiently
+            </li>
+            <li>Managed systems, remotely triaging issues, and administrating their Active Directory</li>
+            <li>
+              Worked with other Analysts and Technical Engineers to triage and solve business issues quickly
+            </li>
+            <li>
+              Created a Python system to vastly improve access to Knowledge Base documents for other Analysts
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel-right w-1/3">
+        <h2>Skills</h2>
+        <h3>Programming languages</h3>
+        <ul class="inline-list">
+          <li>C#</li>
+          <li>HTML/CSS</li>
+          <li>SQL</li>
+          <li>TypeScript</li>
+        </ul>
+
+        <h3>Frameworks and libraries</h3>
+        <ul class="inline-list">
+          <li>.NET</li>
+          <li>Blazor (WASM & Server)</li>
+          <li>ASP.NET Core</li>
+          <li>EF Core</li>
+          <li>SQL Server</li>
+          <li>React</li>
+        </ul>
+
+        <h3>Tools and processes</h3>
+        <ul class="inline-list">
+          <li>Git</li>
+          <li>Agile</li>
+          <li>Azure</li>
+          <li>DevOps</li>
+          <li>Docker</li>
+          <li>GitHub</li>
+          <li>Linux</li>
+          <li>Visual Studio</li>
+        </ul>
+
+        <h2>Highlight projects</h2>
+        <h3>
+          Tyne
+          <a href="https://github.com/alexnoddings/Tyne" class="mx-1 ms-2 font-normal text-slate underline">
+            github</a
+          >
+          <a
+            href="https://alexnoddings.github.io/Tyne/docs/index.html"
+            class="mx-1 font-normal text-slate underline">docs</a
+          >
+          <a href="https://alexnoddings.github.io/Tyne/demo/" class="mx-1 font-normal text-slate underline"
+            >demo
+          </a>
+        </h3>
+        <p>A set of C# packages designed to make line-of-business apps in Blazor more efficiently.</p>
+        <h3>
+          alexnoddings.com
+          <a href="https://alexnoddings.com" class="mx-1 ms-2 font-normal text-slate underline"> site</a>
+          <a
+            href="https://github.com/alexnoddings/alexnoddings.github.io/"
+            class="mx-1 font-normal text-slate underline">github</a
+          >
+        </h3>
+        <p>
+          My personal website - part resume, part portfolio. Created with Tailwind CSS and Astro, and
+          responsible for generating this document!
+        </p>
+        <h3>
+          Quibble
+          <a href="https://github.com/alexnoddings/Quibble" class="mx-1 ms-2 font-normal text-slate underline"
+            >github
+          </a>
+        </h3>
+        <p>
+          Interactive real-time quiz website using Blazor and SignalR. Built and used during Covid for game
+          nights with friends.
+        </p>
+
+        <h2>Education</h2>
+        <h3 class="flex flex-row items-center gap-3">
+          <span>{config.university.name}</span>
+          <span class="text-pdf-sm font-normal text-slate"> 2017 - 2020</span>
+        </h3>
+        <p>First Class Honours Bachelor of Science in Computer Science</p>
+
+        <h2>Other interests</h2>
+        <ul class="inline-list">
+          <li>Music</li>
+          <li>Running</li>
+          <li>Sci-Fi</li>
+          <li>Long walks</li>
+          <li>Video and Tabletop games</li>
+          <li>Cider</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  /* Base */
+  h1 {
+    @apply font-header text-pdf-xl tracking-tight text-amethyst;
+  }
+  h2 {
+    @apply mb-3 font-header text-pdf-lg text-amethyst;
+  }
+  h3 {
+    @apply tracking-wide text-charcoal;
+  }
+
+  /* Jobs */
+  .job .titles h3 {
+    @apply flex items-center gap-2;
+  }
+  .job .titles h3 .title {
+    @apply font-bold;
+  }
+  .job .titles h3 .company {
+  }
+  .job .titles h3 .period {
+    @apply text-pdf-sm text-slate;
+  }
+  .job .titles h4 {
+    @apply my-0.5 flex items-end gap-4;
+  }
+  .job .titles h4 .title {
+    @apply text-charcoal;
+  }
+  .job .titles h4 .period {
+    @apply text-pdf-sm text-slate;
+  }
+
+  .job ul.info {
+    @apply mb-8 mt-2 flex flex-col gap-1 pl-2;
+  }
+
+  .job ul.info li::before {
+    content: "-";
+    @apply mr-1;
+  }
+
+  /* Panels */
+  .panel-right h2:first-of-type {
+    @apply mt-0;
+  }
+  .panel-right h2 {
+    @apply mt-8;
+  }
+  .panel-right h3 {
+    @apply mb-1 mt-4 font-bold;
+  }
+
+  /* Links list */
+  ul.links-list {
+    @apply flex flex-col gap-1.5;
+  }
+  ul.links-list li a {
+    @apply flex flex-row gap-1;
+  }
+  ul.links-list li svg {
+    @apply fill-slate;
+  }
+
+  /* Inline list */
+  ul.inline-list {
+    @apply flex flex-row flex-wrap;
+  }
+  ul.inline-list li {
+  }
+  ul.inline-list li::after {
+    content: ",";
+    @apply mr-1.5;
+  }
+  ul.inline-list li:last-child::after {
+    content: none;
+  }
+</style>

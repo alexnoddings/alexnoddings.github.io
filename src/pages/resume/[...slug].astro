@@ -1,0 +1,74 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import MarkdownContent from "../../components/MarkdownContent.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const positions = await getCollection("resume");
+  return positions.map((position) => ({
+    params: { slug: position.slug },
+    props: position,
+  }));
+}
+
+type Props = CollectionEntry<"resume">;
+
+const position = Astro.props;
+const { Content } = await position.render();
+
+const { titles, company, techs } = position.data;
+---
+
+<MainLayout>
+  <div class="max-w-prose pb-6 pt-12 lg:py-20">
+    <div class="flex items-center">
+      <a
+        href="/"
+        class="text-gradient-r group flex -translate-x-3 from-lavender to-orchid px-3 py-3 hover:from-orchid hover:to-lavender"
+      >
+        <div class="-mt-0.5 mr-2 font-header">←</div>
+         Alex Noddings
+      </a>
+      <span class="mr-5 text-sm">|</span>
+      <span class="text-sm">Please note my public résumé is partially redacted</span>
+    </div>
+    <div class="mb-1 flex flex-col flex-wrap lg:flex-row">
+      <h1 class="font-header text-xl text-mist">
+        {titles[0].name} @ {company}
+      </h1>
+      <span class="mt-1 text-lg">
+        <span class="ml-1 mr-3 lg:ml-5"> •</span>
+        {titles[0].start}
+        {titles[0].end && <> — {titles[0].end}</>}
+      </span>
+    </div>
+    {
+      titles.length > 1 &&
+        titles.slice(1).map((title) => (
+          <div class="flex flex-row flex-wrap items-center">
+            <h2 class="font-header text-lg">{title.name}</h2>
+            <span class="-mb-1 text-lg">
+              <span class="mx-2 lg:ml-4 lg:mr-3"> ·</span>
+              {title.start}
+              {title.end && <> — {title.end}</>}
+            </span>
+          </div>
+        ))
+    }
+    <div class="flex flex-col gap-1 pt-1 md:flex-row md:gap-3">
+      <h3 class="flex-shrink-0 text-mist">Relevant tech:</h3>
+      <div class="flex flex-wrap gap-2">
+        {
+          techs.map((tech) => (
+            <span class="rounded-full bg-lavender/10 px-2 py-1 text-xs text-lavender">{tech}</span>
+          ))
+        }
+      </div>
+    </div>
+    <MarkdownContent class="mt-6">
+      <Content />
+    </MarkdownContent>
+  </div>
+  <Footer class="mt-32" />
+</MainLayout>

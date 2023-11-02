@@ -1,0 +1,17 @@
+---
+import Link from "./Link.astro";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...props } = Astro.props;
+
+const today = new Date();
+---
+
+<footer class:list={[className, "text-smoke"]} {...props}>
+  &copy; {today.getFullYear()} Alex Noddings, built with
+  <Link class="text-mist/80" href="https://astro.build/">Astro</Link>
+   and
+  <Link class="text-mist/80" href="https://tailwindcss.com/">Tailwind</Link>
+</footer>

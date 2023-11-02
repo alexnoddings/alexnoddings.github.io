@@ -1,0 +1,91 @@
+---
+import Link from "../components/Link.astro";
+import LinkIcon from "../components/LinkIcon.astro";
+import GitHubIcon from "../components/icons/GitHubIcon.astro";
+import LinkedInIcon from "../components/icons/LinkedInIcon.astro";
+import MainLayout from "./MainLayout.astro";
+
+interface ColumnLink {
+  title: string;
+  href: string;
+}
+
+interface Props {
+  links?: ColumnLink[];
+}
+
+const { links } = Astro.props;
+---
+
+<MainLayout>
+  <div class="flex flex-col gap-2 lg:flex-row lg:gap-8">
+    <header class="sticky flex flex-col gap-2 pb-6 pt-12 lg:top-0 lg:max-h-screen lg:w-1/2 lg:py-20">
+      <h1 class="font-header text-3xl text-mist">
+        <a href="/">Alex Noddings</a>
+      </h1>
+      <h2 class="font-header text-2xl text-mist">Senior Developer</h2>
+      <p class="mt-4">
+        I build complex full stack web apps, mainly with
+        <br class="hidden lg:block" />
+        <a
+          class="text-gradient-r from-lavender to-orchid hover:from-orchid hover:to-lavender"
+          href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet"
+        >
+          .NET
+        </a>
+         using
+        <a
+          class="text-gradient-r from-orchid to-flamingo hover:from-flamingo hover:to-orchid"
+          href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor"
+        >
+          Blazor
+        </a>
+         on
+        <a
+          class="text-gradient-r from-flamingo to-turquoise hover:from-turquoise hover:to-flamingo"
+          href="https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core"
+        >
+          ASP.NET Core</a
+        >
+         in
+        <a
+          class="text-gradient-r from-turquoise to-lavender hover:from-lavender hover:to-turquoise"
+          href="https://azure.microsoft.com/en-gb"
+        >
+          Azure</a
+        >.
+      </p>
+      <div>
+        {
+          links != null && links.length > 0 && (
+            <ul class="flex flex-row justify-center lg:mt-12 lg:flex-col">
+              {links.map(({ title, href }) => (
+                <li class="w-fit">
+                  <Link
+                    class="flex px-4 py-3 transition-transform lg:hover:translate-x-2 lg:hover:pr-6"
+                    href={href}
+                  >
+                    {title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      <div class="mx-auto flex flex-row gap-2 lg:mx-0 lg:mt-auto lg:pt-4">
+        <LinkIcon class="p-1" href="https://github.com/alexnoddings">
+          <span class="sr-only">Follow me on GitHub</span>
+          <GitHubIcon />
+        </LinkIcon>
+        <LinkIcon class="p-1" href="https://www.linkedin.com/in/alexnoddings/">
+          <span class="sr-only">Connect with me on LinkedIn</span>
+          <LinkedInIcon />
+        </LinkIcon>
+      </div>
+    </header>
+    <main class="flex flex-col gap-2 pb-20 lg:w-1/2">
+      <slot />
+    </main>
+  </div>
+</MainLayout>

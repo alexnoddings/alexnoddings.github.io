@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div class:list={["md-content", className]} {...props}>
+  <slot />
+</div>
+
+<style is:global>
+  .md-content h1 {
+    @apply mb-4 mt-8 font-header text-xl text-mist;
+  }
+  .md-content h2 {
+    @apply mb-3 mt-6 font-header text-lg text-mist;
+  }
+  .md-content h3 {
+    @apply mb-2 mt-4 text-mist;
+  }
+
+  .md-content p {
+    @apply my-2;
+  }
+
+  .md-content ul {
+    @apply flex flex-col gap-1 pl-2;
+  }
+  .md-content li::before {
+    content: "·";
+    @apply mr-1 text-mist;
+  }
+</style>
