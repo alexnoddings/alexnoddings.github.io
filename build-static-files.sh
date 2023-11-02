@@ -1,4 +1,4 @@
-if test -e ./src/pages/.gen/ then
+if test -e ./src/pages/.gen/; then
     echo "Enabling gen endpoints"
     mv ./src/pages/.gen/ ./src/pages/~gen/
 fi
@@ -11,17 +11,17 @@ npm run dev &
 
 # Wait for Astro to start
 echo "Waiting for Astro to start..."
-sleep 1s
-curl --head http://localhost:4321/
-while $? != 0; do 
-    echo "Checking Astro start"
-    curl --head http://localhost:4321/
-    sleep 1s
+until $(curl --output /dev/null --silent --head --fail http://localhost:4321/); do
+    echo "Waiting for Astro to start..."
+    sleep 2
 done
 
 echo "Astro started."
-
 curl http://localhost:4321/~gen/og/og.png -o ./public/meta/og.png
+
+if ! test -e ./public/resume/; then
+    mkdir ./public/resume/
+fi
 curl http://localhost:4321/~gen/resume/resume.pdf -o ./public/resume/alexnoddings.pdf
 
 favicons=( 
@@ -33,7 +33,8 @@ favicons=(
 )
 for i in "${favicons[@]}"
 do
-    curl http://localhost:4321/~gen/favicon/$1 -o ./public/meta/$1
+    echo "..."
+    curl http://localhost:4321/~gen/favicon/$i -o ./public/meta/$i
 done
 
 # npm starts a new process for 'run dev', so we can't reliably capture and kill
