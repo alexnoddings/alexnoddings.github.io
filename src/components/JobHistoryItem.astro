@@ -9,25 +9,52 @@ interface Props {
   titles: Title[];
   company: string;
   techs: string[];
+  skills: string[] | undefined;
   summaries: string[];
   slug: string;
 }
 
-const { titles, company, techs, summaries, slug } = Astro.props;
+const { titles, company, techs, skills, summaries, slug } = Astro.props;
 ---
 
 <a
   href={"/resume/" + slug}
+  data-umami-event="resume-entry"
+  data-umami-event-entry={slug}
   class="link-not-text group/job-item grid grid-cols-12 gap-2 rounded-md px-6 py-5 transition-all hover:bg-lavender/5 hover:!opacity-100 group-hover/job-history:opacity-50 motion-reduce:group-hover/job-history:opacity-100"
 >
-  <div class="col-span-3 text-sm">
-    {titles.at(-1)?.start}
-    {titles[0].end && <> — {titles[0].end}</>}
+  <div class="col-span-3">
+    <div class="flex h-[26px] font-header">
+      <span class="job-period-start">
+        {titles[0].start}
+      </span>
+      {
+        titles[0].end && (
+          <>
+            <span class="job-divider">— </span>
+            <span class="job-period-end">{titles[0].end}</span>
+          </>
+        )
+      }
+    </div>
+    {
+      titles.slice(1).map((title) => (
+        <div class="flex text-sm">
+          <span class="job-period-start">{title.start}</span>
+          {title.end && (
+            <>
+              <span class="job-divider">— </span>
+              <span class="job-period-end">{title.end}</span>
+            </>
+          )}
+        </div>
+      ))
+    }
   </div>
   <div class="col-span-9">
-    <div class="flex flex-row gap-2 font-header">
+    <div class="flex h-[26px] flex-row gap-2 font-header">
       <div class="link-text flex-1 text-mist">
-        {titles[0].name} @ {company}
+        {titles[0].name}
       </div>
       <span
         class="group-hover/job-item:text-gradient-r px-2 py-0.5 transition-transform group-hover/job-item:translate-x-1 group-hover/job-item:from-lavender group-hover/job-item:to-orchid motion-reduce:group-hover/job-item:translate-x-0"
@@ -37,9 +64,9 @@ const { titles, company, techs, summaries, slug } = Astro.props;
     </div>
     {
       titles.length > 1 && (
-        <div class="mb-1">
+        <div class="text-sm">
           {titles.slice(1).map((title) => (
-            <div class="text-sm">{title.name}</div>
+            <div>{title.name}</div>
           ))}
         </div>
       )
@@ -53,6 +80,12 @@ const { titles, company, techs, summaries, slug } = Astro.props;
           <li class="rounded-full bg-lavender/10 px-2 py-1 text-xs text-lavender">{tech}</li>
         ))
       }
+      {
+        skills &&
+          skills.map((skill) => (
+            <li class="rounded-full bg-turquoise/10 px-2 py-1 text-xs text-turquoise">{skill}</li>
+          ))
+      }
     </ul>
   </div>
 </a>
@@ -61,5 +94,20 @@ const { titles, company, techs, summaries, slug } = Astro.props;
   .job-summary li::before {
     content: "‣";
     @apply mr-1;
+  }
+
+  .job-period-start {
+    @apply block text-end;
+    width: 48px;
+  }
+
+  .job-divider {
+    @apply block text-center;
+    width: 26px;
+  }
+
+  .job-period-end {
+    @apply block;
+    width: 42px;
   }
 </style>

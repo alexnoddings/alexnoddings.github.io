@@ -1,5 +1,6 @@
 ---
 import Link from "../components/Link.astro";
+import EmailIcon from "../components/icons/EmailIcon.astro";
 import LinkIcon from "../components/LinkIcon.astro";
 import GitHubIcon from "../components/icons/GitHubIcon.astro";
 import LinkedInIcon from "../components/icons/LinkedInIcon.astro";
@@ -21,36 +22,54 @@ const { links } = Astro.props;
   <div class="flex flex-col gap-2 lg:flex-row lg:gap-8">
     <header class="sticky flex flex-col gap-2 pb-6 pt-12 lg:top-0 lg:max-h-screen lg:w-1/2 lg:py-20">
       <h1 class="font-header text-3xl text-mist">
-        <a href="/">Alex Noddings</a>
+        <a href="/" data-umami-event="home">Alex Noddings</a>
       </h1>
-      <h2 class="font-header text-2xl text-mist">Senior Developer</h2>
+      <h2 class="font-header text-2xl text-mist underline decoration-smoke/75 decoration-underline-thick">
+        Principal Software Engineer
+      </h2>
       <p class="mt-4">
-        I build complex full stack web apps, mainly with
-        <br class="hidden lg:block" />
+        Skilled full-stack developer architecting and leading the development of complex business systems,
+        mainly with
         <a
-          class="text-gradient-r from-lavender to-orchid hover:from-orchid hover:to-lavender"
+          class="text-gradient-r from-orchid to-lavender hover:from-lavender hover:to-orchid"
           href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet"
+          data-umami-event="external-link"
+          data-umami-event-site="dotnet"
         >
           .NET
         </a>
          using
         <a
-          class="text-gradient-r from-orchid to-flamingo hover:from-flamingo hover:to-orchid"
+          class="text-gradient-r from-lavender to-orchid hover:from-orchid hover:to-lavender"
           href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor"
+          data-umami-event="external-link"
+          data-umami-event-site="blazor"
         >
           Blazor
+        </a>
+         and
+        <a
+          class="text-gradient-r from-orchid to-flamingo hover:from-flamingo hover:to-orchid"
+          href="https://learn.microsoft.com/en-us/ef/core/"
+          data-umami-event="external-link"
+          data-umami-event-site="efcore"
+        >
+          EF
         </a>
          on
         <a
           class="text-gradient-r from-flamingo to-turquoise hover:from-turquoise hover:to-flamingo"
           href="https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core"
+          data-umami-event="external-link"
+          data-umami-event-site="aspnetcore"
         >
           ASP.NET Core</a
-        >
-         in
+        >, and deployed to
         <a
           class="text-gradient-r from-turquoise to-lavender hover:from-lavender hover:to-turquoise"
           href="https://azure.microsoft.com/en-gb"
+          data-umami-event="external-link"
+          data-umami-event-site="azure"
         >
           Azure</a
         >.
@@ -61,10 +80,7 @@ const { links } = Astro.props;
             <ul class="flex flex-row justify-center lg:mt-12 lg:flex-col">
               {links.map(({ title, href }) => (
                 <li class="w-fit">
-                  <Link
-                    class="flex px-4 py-3 transition-transform lg:hover:translate-x-2 lg:hover:pr-6"
-                    href={href}
-                  >
+                  <Link class="column-link" href={href}>
                     {title}
                   </Link>
                 </li>
@@ -74,13 +90,33 @@ const { links } = Astro.props;
         }
       </div>
       <div class="mx-auto flex flex-row gap-2 lg:mx-0 lg:mt-auto lg:pt-4">
-        <LinkIcon class="p-1" href="https://github.com/alexnoddings">
-          <span class="sr-only">Follow me on GitHub</span>
+        <LinkIcon
+          class="p-1"
+          href="https://github.com/alexnoddings"
+          data-umami-event="profile-link"
+          data-umami-event-site="github"
+          data-umami-event-loc="socials"
+        >
+          <span class="sr-only">Look at my GitHub</span>
           <GitHubIcon />
         </LinkIcon>
-        <LinkIcon class="p-1" href="https://www.linkedin.com/in/alexnoddings/">
+        <LinkIcon
+          class="p-1"
+          href="https://www.linkedin.com/in/alexnoddings/"
+          data-umami-event="profile-link"
+          data-umami-event-site="linkedin"
+        >
           <span class="sr-only">Connect with me on LinkedIn</span>
           <LinkedInIcon />
+        </LinkIcon>
+        <LinkIcon
+          class="p-1"
+          href="mailto:hello@alexnoddings.com"
+          data-umami-event="contact"
+          data-umami-event-type="email"
+        >
+          <span class="sr-only">Get in touch via email</span>
+          <EmailIcon />
         </LinkIcon>
       </div>
     </header>
@@ -89,3 +125,10 @@ const { links } = Astro.props;
     </main>
   </div>
 </MainLayout>
+
+<style>
+  .column-link {
+    @apply block px-6 py-4 transition-transform lg:hover:ps-8;
+    transition-property: padding;
+  }
+</style>

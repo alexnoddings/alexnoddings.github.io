@@ -1,6 +1,8 @@
 ---
 import Link from "./Link.astro";
 import type { HTMLAttributes } from "astro/types";
+import LinkIcon from "../components/LinkIcon.astro";
+import GitHubIcon from "../components/icons/GitHubIcon.astro";
 
 type Props = HTMLAttributes<"div">;
 
@@ -10,8 +12,32 @@ const today = new Date();
 ---
 
 <footer class:list={[className, "text-smoke"]} {...props}>
-  &copy; {today.getFullYear()} Alex Noddings, built with
-  <Link class="text-mist/80" href="https://astro.build/">Astro</Link>
+  &copy; Alex Noddings, built with
+  <Link
+    class="text-mist/80"
+    href="https://astro.build/"
+    data-umami-event="external-link"
+    data-umami-event-site="astro"
+  >
+    Astro
+  </Link>
    and
-  <Link class="text-mist/80" href="https://tailwindcss.com/">Tailwind</Link>
+  <Link
+    class="text-mist/80"
+    href="https://tailwindcss.com/"
+    data-umami-event="external-link"
+    data-umami-event-site="tailwind"
+  >
+    Tailwind
+  </Link>
+  <LinkIcon
+    class="ms-1"
+    href="https://github.com/alexnoddings/alexnoddings.github.io/"
+    data-umami-event="profile-link"
+    data-umami-event-site="github"
+    data-umami-event-loc="footer"
+  >
+    <span class="sr-only">Look at this site's source code on GitHub</span>
+    <GitHubIcon class="inline" width={22} height={22} />
+  </LinkIcon>
 </footer>

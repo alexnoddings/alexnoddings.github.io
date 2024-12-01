@@ -6,6 +6,11 @@ import BaseHead from "../components/BaseHead.astro";
 <html lang="en">
   <head>
     <BaseHead />
+    <script
+      is:inline
+      defer
+      src="https://a.alexnoddings.com/s.js"
+      data-website-id="76c598e2-2205-4909-b850-b16e99b72269"></script>
   </head>
   <body class="relative m-0 min-h-screen bg-violet p-0 font-body text-base text-smoke">
     <div id="bg-dotted"></div>
@@ -18,11 +23,10 @@ import BaseHead from "../components/BaseHead.astro";
         @apply bg-violet;
         background-image: radial-gradient(
             farthest-corner circle at var(--bg-cover-x, -50vw) var(--bg-cover-y, -50vh),
-            transparent 80px,
-            #101828CC 160px
+            transparent 100px,
+            #111428cc 180px
           ),
-          radial-gradient(#95A5B5BB 1px, transparent 0),
-          radial-gradient(#95A5B577 1px, transparent 0);
+          radial-gradient(#95a5b5ff 1px, transparent 0), radial-gradient(#95a5b566 1px, transparent 0);
         background-size:
           100% 100%,
           40px 40px,
@@ -31,6 +35,27 @@ import BaseHead from "../components/BaseHead.astro";
           0px 0px,
           20px 20px,
           0 0;
+      }
+
+      @media (prefers-reduced-motion) {
+        #bg-dotted {
+          background-image: radial-gradient(transparent 0, #111428cc 0),
+            radial-gradient(#95a5b5ff 1px, transparent 0), radial-gradient(#95a5b566 1px, transparent 0);
+        }
+      }
+
+      @media (prefers-contrast: more) {
+        a,
+        .link-text {
+          @apply underline;
+        }
+        a:hover,
+        .link-text:hover {
+          @apply bg-none text-mist decoration-underline-thick !important;
+        }
+        a.link-not-text {
+          @apply no-underline;
+        }
       }
     </style>
     <script>

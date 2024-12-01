@@ -4,7 +4,7 @@ export default {
   theme: {
     colors: {
       transparent: "transparent",
-      violet: "#101828",
+      violet: "#111428",
       smoke: "#95A5B5",
       mist: "#E2E8EF",
       lavender: "#9880E8",
@@ -31,7 +31,8 @@ export default {
       "pdf-sm": ["0.7rem", "0.7rem"],
       "pdf-base": ["0.8rem", "0.9rem"],
       "pdf-lg": ["1.2rem", "1.2rem"],
-      "pdf-xl": ["3rem", "2rem"],
+      "pdf-xl": ["1.8rem", "2.3rem"],
+      "pdf-xxl": ["3rem", "2rem"],
     },
     lineHeight: {
       normal: "1.13",
@@ -45,7 +46,7 @@ export default {
     screens: {
       sm: "384px",
       md: "512px",
-      lg: "1024px",
+      lg: "1152px",
       xl: "1280px",
     },
   },

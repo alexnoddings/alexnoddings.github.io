@@ -2,21 +2,25 @@
 import EmailIcon from "../../../components/icons/EmailIcon.astro";
 import GitHubIcon from "../../../components/icons/GitHubIcon.astro";
 import LinkedInIcon from "../../../components/icons/LinkedInIcon.astro";
+import RegionIcon from "../../../components/icons/RegionIcon.astro";
 import WebIcon from "../../../components/icons/WebIcon.astro";
 import { pdf_config } from "./pdf-config";
 import "../../../styles/site.css";
 
 const default_config = {
   isPublic: true,
-  emailAddress: null,
+  region: "United Kingdom",
+  emailAddress: "hello@alexnoddings.com",
   university: {
     name: "University",
   },
   summer1: {
     company: "Industry",
+    period: "Summer 2017",
   },
   summer23: {
     company: "Industry",
+    period: "Summer 2018/19",
   },
   grad: {
     company: "Engineering",
@@ -35,7 +39,11 @@ const default_config = {
     },
     senior: {
       start: "2023",
-      end: "Present",
+      end: "2024",
+    },
+    principal: {
+      start: "2024",
+      end: "Now",
     },
   },
 };
@@ -46,17 +54,36 @@ const config = pdf_config ?? default_config;
 <!doctype html>
 <html lang="en">
   <head></head>
-  <body class="mx-10 mb-6 mt-12 flex flex-col gap-12 font-body text-pdf-base text-slate">
-    <div class="flex flex-row gap-6">
+  <body class="mx-10 mb-6 mt-12 flex flex-col gap-4 font-body text-pdf-base text-slate">
+    <h1>Alex Noddings</h1>
+    <div class="-mt-4 flex flex-row gap-6">
       <div class="w-2/3">
-        <h1>Alex Noddings</h1>
-        <p class="mt-6 pr-28">
-          Senior full stack developer architecting and building complex web apps with .NET, Blazor, ASP.NET
-          Core, and Azure.
-        </p>
+        <h2>Principal Software Engineer</h2>
+        <div class="mt-2 pr-16">
+          <p>
+            Skilled full-stack developer architecting and leading the development of complex business systems
+            in .NET.
+          </p>
+          <p class="mt-1">
+            I'm passionate about delivering high quality, bespoke experiences for users by empowering the team
+            around me and driving technical evolution.
+          </p>
+        </div>
       </div>
-      <div class="w-1/3 pt-4">
+      <div class="w-1/3 pt-2">
         <ul class="links-list">
+          <li>
+            <span>
+              <RegionIcon width={14} height={14} />
+              <span>{config.region}</span>
+            </span>
+          </li>
+          <li>
+            <a href="https://alexnoddings.com/?utm_source=resume&utm_content=website">
+              <WebIcon width={14} height={14} />
+              <span>alexnoddings.com</span>
+            </a>
+          </li>
           {
             config.emailAddress != null && (
               <li>
@@ -68,21 +95,15 @@ const config = pdf_config ?? default_config;
             )
           }
           <li>
-            <a href="https://linkedin.com/in/alexnoddings">
-              <LinkedInIcon width={14} height={14} />
-              <span>linkedin.com/in/alexnoddings</span>
-            </a>
-          </li>
-          <li>
             <a href="https://github.com/alexnoddings">
               <GitHubIcon width={14} height={14} />
               <span>github.com/alexnoddings</span>
             </a>
           </li>
           <li>
-            <a href="https://alexnoddings.com">
-              <WebIcon width={14} height={14} />
-              <span>alexnoddings.com</span>
+            <a href="https://linkedin.com/in/alexnoddings">
+              <LinkedInIcon width={14} height={14} />
+              <span>linkedin.com/in/alexnoddings</span>
             </a>
           </li>
         </ul>
@@ -90,47 +111,78 @@ const config = pdf_config ?? default_config;
     </div>
     <div class="flex flex-row gap-6">
       <div class="panel-left w-2/3">
-        <h2>Experience</h2>
-        {config.isPublic && <p class="-mt-2 mb-4">Please note my public resume is partially redacted</p>}
+        <h3>Experience</h3>
+        {
+          config.isPublic && (
+            <p class="public-privacy">
+              For privacy, exact dates and details aren't provided on my public resume
+            </p>
+          )
+        }
         <div class="job">
           <div class="titles">
-            <h3>
-              <span class="title">Senior Developer</span>
-              <span class="company">@ {config.consultancy.company ?? "Consultancy"}</span>
-              <span class="period">{config.consultancy.senior.start} - {config.consultancy.senior.end}</span>
-            </h3>
-            <h4>
-              <span class="title">Developer</span>
-              <span class="period">{config.consultancy.mid.start} - {config.consultancy.mid.end}</span>
-            </h4>
-            <h4>
-              <span class="title">Junior Developer</span>
-              <span class="period">{config.consultancy.junior.start} - {config.consultancy.junior.end}</span>
-            </h4>
+            <div class="flex flex-row gap-2">
+              <div class="flex flex-col">
+                <h4 class="period">
+                  <span class="period-start">{config.consultancy.principal.start}</span>
+                  <span class="period-divider">-</span>
+                  <span class="period-end">{config.consultancy.principal.end}</span>
+                </h4>
+                <h5 class="period period-previous">
+                  <span class="period-start">{config.consultancy.senior.start}</span>
+                  <span class="period-divider">-</span>
+                  <span class="period-end">{config.consultancy.senior.end}</span>
+                </h5>
+                <h5 class="period period-previous">
+                  <span class="period-start">{config.consultancy.mid.start}</span>
+                  <span class="period-divider">-</span>
+                  <span>{config.consultancy.mid.end}</span>
+                </h5>
+                <h5 class="period period-previous">
+                  <span class="period-start">{config.consultancy.junior.start}</span>
+                  <span class="period-divider">-</span>
+                  <span class="period-end">{config.consultancy.junior.end}</span>
+                </h5>
+              </div>
+              <div>
+                <h4 class="title">Principal Software Engineer</h4>
+                <h5 class="title title-previous">Senior Developer</h5>
+                <h5 class="title title-previous">Developer</h5>
+                <h5 class="title title-previous">Junior Developer</h5>
+              </div>
+            </div>
+            <h4 class="company">@ {config.consultancy.company ?? "Consultancy"}</h4>
           </div>
           <ul class="info">
+            <li>Architecting and leading agile delivery of high quality, bespoke experiences for clients</li>
             <li>
-              Architect and deliver high-quality, bespoke, robust systems for a range of clients primarily in
-              ASP.NET Core, Blazor, and React
+              Collaborating with a range of stakeholders to discover business requirements and opportunities
+              for innovation
             </li>
             <li>
-              Provide technical leadership within the cloud apps team by exploring new technology,
-              implementing best practices, and constantly striving to improve our processes and workflows
+              Defining short through long-term technology strategies, creating robust guidelines for ensuring
+              software quality, and leading their adoption
             </li>
-            <li>Run technical interviews for new devs, and design and manage our technical test system</li>
             <li>
-              Collaborate with clients and other developers to discover and fulfill business requirements
+              Providing leadership across the team, driving technical evolution, and constantly striving to
+              improve our processes and workflows
             </li>
-            <li>Maintain existing and legacy systems to ensure clients face minimal disruption</li>
+            <li>Empowering the development team and acting as the escalation path for technical issues</li>
+            <li>Running interviews for new hires, and designing/managing our technical test process/site</li>
+            <li>Supporting existing and legacy systems to ensure clients face minimal disruption</li>
           </ul>
         </div>
         <div class="job">
           <div class="titles">
-            <h3>
-              <span class="title">Graduate Developer</span>
-              <span class="company">@ {config.grad.company ?? "Engineering"}</span>
-              <span class="period">{config.grad.start} - {config.grad.end}</span>
-            </h3>
+            <div class="flex flex-row gap-2">
+              <h4 class="period">
+                <span class="period-start">{config.grad.start}</span>
+                <span class="period-divider">-</span>
+                <span class="period-end">{config.grad.end}</span>
+              </h4>
+              <h4 class="title">Graduate Developer</h4>
+            </div>
+            <h4 class="company">@ {config.grad.company ?? "Engineering"}</h4>
           </div>
           <ul class="info">
             <li>Migrated internal systems from an EoL version of Access to a new SQL backend</li>
@@ -151,82 +203,122 @@ const config = pdf_config ?? default_config;
         </div>
         <div class="job">
           <div class="titles">
-            <h3>
-              <span class="title">Summer Placement Developer</span>
-              <span class="company">@ {config.summer23.company}</span>
-              <span class="period">Summer 2018/2019</span>
-            </h3>
+            <div class="flex flex-row gap-2">
+              <h4 class="period">
+                {config.summer23.period}
+              </h4>
+              <h4 class="title">Summer Placement Developer</h4>
+            </div>
+            <h4 class="company">@ {config.summer23.company ?? "Engineering"}</h4>
           </div>
           <ul class="info">
             <li>Developing existing desktop applications using C# & WPF</li>
             <li>Designing and creating internal web systems in C#, ASP.NET Core, & Blazor on Azure</li>
-            <li>
-              Meeting with customers from across the business to identify and prioritise their business
-              requirements
-            </li>
+            <li>Meeting with customers from across the business to identify requirements</li>
             <li>
               Collaborated with other developers to produce high-quality systems to streamline business
               processes
             </li>
-            <li>Ported a 20+ year old Access/VB system to SQL Server</li>
+            <li>
+              Ported a 20+ year old Access/VB system to SQL Server to cut load times from tens of minutes to
+              tens of seconds
+            </li>
           </ul>
         </div>
         <div class="job">
           <div class="titles">
-            <h3>
-              <span class="title">Service Desk Analyst</span>
-              <span class="company">@ {config.summer1.company}</span>
-              <span class="period">Summer 2017</span>
-            </h3>
+            <div class="flex flex-row gap-2">
+              <h4 class="period">
+                {config.summer1.period}
+              </h4>
+              <h4 class="title">Service Desk Analyst</h4>
+            </div>
+            <h4 class="company">@ {config.grad.company ?? "Industry"}</h4>
           </div>
           <ul class="info">
             <li>
-              Worked with users from across the globe to resolve technical issues quickly and efficiently
+              Worked with users from across the globe to quickly and efficiently resolve technical issues
             </li>
-            <li>Managed systems, remotely triaging issues, and administrating their Active Directory</li>
+            <li>
+              Managed Windows systems, remotely triaged issues, and administrated their Active Directory
+            </li>
             <li>
               Worked with other Analysts and Technical Engineers to triage and solve business issues quickly
             </li>
             <li>
-              Created a Python system to vastly improve access to Knowledge Base documents for other Analysts
+              Created a bespoke Python system to vastly improve access to Knowledge Base documents for other
+              Analysts
             </li>
           </ul>
         </div>
       </div>
+
       <div class="panel-right w-1/3">
-        <h2>Skills</h2>
-        <h3>Programming languages</h3>
+        <h3>At a glance</h3>
+        <h4>Programming languages</h4>
         <ul class="inline-list">
           <li>C#</li>
-          <li>HTML/CSS</li>
+          <li>HTML</li>
+          <li>CSS</li>
           <li>SQL</li>
-          <li>TypeScript</li>
+          <li>Type/JavaScript</li>
         </ul>
 
-        <h3>Frameworks and libraries</h3>
+        <h4>Frameworks and libraries</h4>
         <ul class="inline-list">
           <li>.NET</li>
           <li>Blazor (WASM & Server)</li>
           <li>ASP.NET Core</li>
           <li>EF Core</li>
           <li>SQL Server</li>
+          <li>Azure Functions</li>
           <li>React</li>
         </ul>
 
-        <h3>Tools and processes</h3>
+        <h4>Tools and processes</h4>
         <ul class="inline-list">
+          <li>Azure DevOps</li>
+          <li>CI/CD</li>
+          <li>Azure Cloud</li>
           <li>Git</li>
           <li>Agile</li>
-          <li>Azure</li>
-          <li>DevOps</li>
           <li>Docker</li>
-          <li>GitHub</li>
           <li>Linux</li>
-          <li>Visual Studio</li>
+          <li>GitHub</li>
         </ul>
 
-        <h2>Highlight projects</h2>
-        <h3>
+        <h4>Skills</h4>
+        <ul class="info">
+          <li>Project leadership</li>
+          <li>Technical management</li>
+          <li>Requirement scoping</li>
+          <li>Stakeholder communication</li>
+        </ul>
+
+        <h3>What I love</h3>
+
+        <h4>Professionally</h4>
+        <ul class="info">
+          <li>Delivering quality, robust systems</li>
+          <li>Learning from and teaching colleagues</li>
+          <li>Continuing professional development</li>
+          <li>Driving technical evolution</li>
+        </ul>
+
+        <h4>Personally</h4>
+        <ul class="inline-list">
+          <li>Music</li>
+          <li>Long walks</li>
+          <li>Video games</li>
+          <li>Cheese</li>
+          <li>Tabletop RPGs</li>
+          <li>Sci-Fi</li>
+          <li>Surreal comedies</li>
+          <li>Keeping active</li>
+        </ul>
+
+        <h3>Highlight projects</h3>
+        <h4>
           Tyne
           <a href="https://github.com/alexnoddings/Tyne" class="mx-1 ms-2 font-normal text-slate underline">
             github</a
@@ -238,47 +330,45 @@ const config = pdf_config ?? default_config;
           <a href="https://alexnoddings.github.io/Tyne/demo/" class="mx-1 font-normal text-slate underline"
             >demo
           </a>
-        </h3>
-        <p>A set of C# packages designed to make line-of-business apps in Blazor more efficiently.</p>
-        <h3>
+        </h4>
+        <p>
+          An extensive library of .NET packages designed around making line-of-business Blazor apps more
+          efficiently and securely.
+        </p>
+        <h4>
           alexnoddings.com
-          <a href="https://alexnoddings.com" class="mx-1 ms-2 font-normal text-slate underline"> site</a>
+          <a
+            href="https://alexnoddings.com/?utm_source=resume&utm_content=projects"
+            class="mx-1 ms-2 font-normal text-slate underline"
+          >
+            site</a
+          >
           <a
             href="https://github.com/alexnoddings/alexnoddings.github.io/"
             class="mx-1 font-normal text-slate underline">github</a
           >
-        </h3>
+        </h4>
         <p>
           My personal website - part resume, part portfolio. Created with Tailwind CSS and Astro, and
           responsible for generating this document!
         </p>
-        <h3>
+        <h4>
           Quibble
           <a href="https://github.com/alexnoddings/Quibble" class="mx-1 ms-2 font-normal text-slate underline"
             >github
           </a>
-        </h3>
+        </h4>
         <p>
-          Interactive real-time quiz website using Blazor and SignalR. Built and used during Covid for game
-          nights with friends.
+          Interactive real-time quiz website built using Blazor and SignalR on ASP.NET Core. Initially
+          designed during Covid for game nights with friends, and occasionally resurrected since.
         </p>
 
-        <h2>Education</h2>
-        <h3 class="flex flex-row items-center gap-3">
+        <h3>Education</h3>
+        <h4 class="flex flex-row items-center gap-3">
           <span>{config.university.name}</span>
           <span class="text-pdf-sm font-normal text-slate"> 2017 - 2020</span>
-        </h3>
+        </h4>
         <p>First Class Honours Bachelor of Science in Computer Science</p>
-
-        <h2>Other interests</h2>
-        <ul class="inline-list">
-          <li>Music</li>
-          <li>Running</li>
-          <li>Sci-Fi</li>
-          <li>Long walks</li>
-          <li>Video and Tabletop games</li>
-          <li>Cider</li>
-        </ul>
       </div>
     </div>
   </body>
@@ -287,39 +377,56 @@ const config = pdf_config ?? default_config;
 <style>
   /* Base */
   h1 {
-    @apply font-header text-pdf-xl tracking-tight text-amethyst;
+    @apply font-header text-pdf-xxl tracking-tight text-amethyst;
   }
   h2 {
-    @apply mb-3 font-header text-pdf-lg text-amethyst;
+    @apply font-header text-pdf-xl tracking-tight text-charcoal;
   }
   h3 {
+    @apply mb-2 font-header text-pdf-lg text-amethyst;
+  }
+  h4 {
     @apply tracking-wide text-charcoal;
   }
 
+  .public-privacy {
+    @apply -mt-2 mb-3 italic;
+  }
+
   /* Jobs */
-  .job .titles h3 {
-    @apply flex items-center gap-2;
+  .job .titles {
+    @apply my-0.5 flex flex-row items-start gap-2;
   }
-  .job .titles h3 .title {
-    @apply font-bold;
+
+  .job .titles .title {
+    @apply text-pdf-base font-bold text-charcoal;
   }
-  .job .titles h3 .company {
+
+  .job .titles .title-previous {
+    @apply text-pdf-sm font-normal text-slate;
   }
-  .job .titles h3 .period {
-    @apply text-pdf-sm text-slate;
+
+  .job .titles .period {
+    @apply text-slate;
   }
-  .job .titles h4 {
-    @apply my-0.5 flex items-end gap-4;
+  .job .titles .period-previous {
+    @apply text-pdf-sm;
   }
-  .job .titles h4 .title {
-    @apply text-charcoal;
+  .job .titles .period .period-start {
+    @apply inline-block text-end;
+    min-width: 36px;
   }
-  .job .titles h4 .period {
-    @apply text-pdf-sm text-slate;
+  .job .titles .period .period-end {
+    @apply inline-block;
+    min-width: 32px;
+  }
+  .job .titles .period .period-divider {
+    @apply inline-block text-center;
+    min-width: 10px;
   }
 
   .job ul.info {
-    @apply mb-8 mt-2 flex flex-col gap-1 pl-2;
+    @apply mb-4 mt-1 flex flex-col gap-0.5 pl-2;
   }
 
   .job ul.info li::before {
@@ -328,21 +435,21 @@ const config = pdf_config ?? default_config;
   }
 
   /* Panels */
-  .panel-right h2:first-of-type {
+  .panel-right h3:first-of-type {
     @apply mt-0;
   }
-  .panel-right h2 {
-    @apply mt-8;
-  }
   .panel-right h3 {
-    @apply mb-1 mt-4 font-bold;
+    @apply mt-4;
+  }
+  .panel-right h4 {
+    @apply mb-0.5 mt-2 font-bold;
   }
 
   /* Links list */
   ul.links-list {
     @apply flex flex-col gap-1.5;
   }
-  ul.links-list li a {
+  ul.links-list li * {
     @apply flex flex-row gap-1;
   }
   ul.links-list li svg {

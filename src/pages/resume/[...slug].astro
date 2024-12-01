@@ -17,58 +17,129 @@ type Props = CollectionEntry<"resume">;
 const position = Astro.props;
 const { Content } = await position.render();
 
-const { titles, company, techs } = position.data;
+const { titles, company, techs, skills } = position.data;
 ---
 
 <MainLayout>
-  <div class="max-w-prose pb-6 pt-12 lg:py-20">
+  <div class="prose pb-6 pt-12 lg:py-20">
     <div class="flex items-center">
       <a
         href="/"
-        class="text-gradient-r group flex -translate-x-3 from-lavender to-orchid px-3 py-3 hover:from-orchid hover:to-lavender"
+        data-umami-event="home"
+        class="text-lg text-gradient-r group flex -translate-x-3 from-lavender to-orchid px-3 py-3 hover:from-orchid hover:to-lavender"
       >
-        <div class="-mt-0.5 mr-2 font-header">←</div>
+        <div class="-mt-1 mr-2 font-header">←</div>
          Alex Noddings
       </a>
       <span class="mr-5 text-sm">|</span>
-      <span class="text-sm">Please note my public résumé is partially redacted</span>
+      <span class="text-sm">For privacy, exact dates and details aren't provided on my public résumé</span>
     </div>
-    <div class="mb-1 flex flex-col flex-wrap lg:flex-row">
-      <h1 class="font-header text-xl text-mist">
-        {titles[0].name} @ {company}
-      </h1>
-      <span class="mt-1 text-lg">
-        <span class="ml-1 mr-3 lg:ml-5"> •</span>
-        {titles[0].start}
-        {titles[0].end && <> — {titles[0].end}</>}
-      </span>
-    </div>
-    {
-      titles.length > 1 &&
-        titles.slice(1).map((title) => (
-          <div class="flex flex-row flex-wrap items-center">
-            <h2 class="font-header text-lg">{title.name}</h2>
-            <span class="-mb-1 text-lg">
-              <span class="mx-2 lg:ml-4 lg:mr-3"> ·</span>
-              {title.start}
-              {title.end && <> — {title.end}</>}
-            </span>
-          </div>
-        ))
-    }
-    <div class="flex flex-col gap-1 pt-1 md:flex-row md:gap-3">
-      <h3 class="flex-shrink-0 text-mist">Relevant tech:</h3>
-      <div class="flex flex-wrap gap-2">
+
+    <div class="flex flex-row gap-3">
+      <div class="jobs">
         {
-          techs.map((tech) => (
-            <span class="rounded-full bg-lavender/10 px-2 py-1 text-xs text-lavender">{tech}</span>
-          ))
+          titles[0].end 
+            ? (<>
+              <span class="job-period">
+                {titles[0].start}
+              </span>
+              <span class="job-period">
+                — {titles[0].end}
+              </span>
+            </>)
+            : (<>
+              <span class="job-span">
+                {titles[0].start}
+              </span>
+            </>)
+        }
+        <span class="job-divider mb-1">•</span>
+        <h1 class="font-header text-xl text-mist job-title mb-1">
+          {titles[0].name}
+        </h1>
+        {
+          titles.length > 1 &&
+            titles.slice(1).map((title) => (
+              <>
+                {
+                  title.end 
+                    ? (<>
+                      <span class="job-period">
+                        {title.start}
+                      </span>
+                      <span class="job-period">
+                        — {title.end}
+                      </span>
+                    </>)
+                    : (<>
+                      <span class="job-span">
+                        {title.start}
+                      </span>
+                    </>)
+                }
+              </>
+              
+              <span class="job-divider text-lg">·</span>
+              <h2 class="font-header job-title">{title.name}</h2>
+            ))
         }
       </div>
+      <h1 class="font-header text-xl text-mist mt-0.5">
+        @ {company}
+      </h1>
     </div>
-    <MarkdownContent class="mt-6">
-      <Content />
-    </MarkdownContent>
+
+    <div class="max-w-prose">
+      <div class="flex flex-col gap-1 pt-2 md:flex-row md:gap-3">
+        <h3 class="flex-shrink-0 text-mist">Technologies:</h3>
+        <div class="flex flex-wrap gap-2">
+          {
+            techs.map((tech) => (
+              <span class="rounded-full bg-lavender/10 px-2 py-1 text-xs text-lavender">{tech}</span>
+            ))
+          }
+        </div>
+      </div>
+      {
+        skills && (
+          <div class="flex flex-col gap-1 pt-2 md:flex-row md:gap-3">
+            <h3 class="flex-shrink-0 text-mist">Skills:</h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.map((skill) => (
+                <span class="rounded-full bg-turquoise/10 px-2 py-1 text-xs text-turquoise">{skill}</span>
+              ))}
+            </div>
+          </div>
+        )
+      }
+      <MarkdownContent class="mt-6">
+        <Content />
+      </MarkdownContent>
+    </div>
   </div>
-  <Footer class="mt-32" />
+  <Footer class="mt-20 mb-12" />
 </MainLayout>
+
+<style>
+  .jobs {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    @apply text-lg max-w-max gap-x-1;
+  }
+  .jobs .job-title {
+    height: 32px;
+    @apply self-end;
+  }
+  .jobs .job-divider {
+    height: 35px;
+    @apply translate-y-1 justify-self-center self-center mx-2;
+  }
+  .jobs .job-period {
+    height: 35px;
+    @apply translate-y-1;
+  }
+  .jobs .job-span {
+    height: 35px;
+    @apply translate-y-1 col-span-2;
+  }
+</style>

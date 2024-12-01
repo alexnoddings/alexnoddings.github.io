@@ -12,6 +12,7 @@ const resume = defineCollection({
     ),
     company: z.string(),
     techs: z.array(z.string()),
+    skills: z.array(z.string()).optional(),
     summaries: z.array(z.string()),
   }),
 });
