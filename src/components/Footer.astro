@@ -7,8 +7,6 @@ import GitHubIcon from "../components/icons/GitHubIcon.astro";
 type Props = HTMLAttributes<"div">;
 
 const { class: className, ...props } = Astro.props;
-
-const today = new Date();
 ---
 
 <footer class:list={[className, "text-center text-smoke"]} {...props}>

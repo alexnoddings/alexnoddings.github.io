@@ -67,7 +67,6 @@ const positions = (await getCollection("resume")).sort((pos1, pos2) => pos2.data
           <li>
             <JobHistoryItem
               titles={position.data.titles}
-              company={position.data.company}
               techs={position.data.techs}
               skills={position.data.skills}
               summaries={position.data.summaries}

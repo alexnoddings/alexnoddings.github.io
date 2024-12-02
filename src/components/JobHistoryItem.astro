@@ -9,14 +9,13 @@ interface Title {
 
 interface Props {
   titles: Title[];
-  company: string;
   techs: string[];
   skills: string[] | undefined;
   summaries: string[];
   slug: string;
 }
 
-const { titles, company, techs, skills, summaries, slug } = Astro.props;
+const { titles, techs, skills, summaries, slug } = Astro.props;
 
 const mainTitleStyle = {
   dateClassName: "text-mist font-header",
