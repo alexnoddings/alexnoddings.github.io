@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
 import MarkdownContent from "../../components/MarkdownContent.astro";
 import Footer from "../../components/Footer.astro";
+import JobTitles from "../../components/JobTitles.astro";
 
 export async function getStaticPaths() {
   const positions = await getCollection("resume");
@@ -17,7 +18,21 @@ type Props = CollectionEntry<"resume">;
 const position = Astro.props;
 const { Content } = await position.render();
 
-const { titles, company, techs, skills } = position.data;
+const { titles, sector, techs, skills } = position.data;
+
+const mainTitleStyle = {
+  dateClassName: "text-mist font-header text-xl",
+  divider: "•",
+  dividerClassName: "text-smoke font-header text-xl mx-1",
+  titleClassName: "text-mist font-header text-xl",
+};
+
+const offTitleStyle = {
+  dateClassName: "text-smoke text-lg",
+  divider: "·",
+  dividerClassName: "text-lg mx-1",
+  titleClassName: "text-smoke font-header text-lg",
+};
 ---
 
 <MainLayout>
@@ -26,7 +41,7 @@ const { titles, company, techs, skills } = position.data;
       <a
         href="/"
         data-umami-event="home"
-        class="text-lg text-gradient-r group flex -translate-x-3 from-lavender to-orchid px-3 py-3 hover:from-orchid hover:to-lavender"
+        class="text-gradient-r group flex -translate-x-3 from-lavender to-orchid px-3 py-3 text-lg hover:from-orchid hover:to-lavender"
       >
         <div class="-mt-1 mr-2 font-header">←</div>
          Alex Noddings
@@ -35,61 +50,13 @@ const { titles, company, techs, skills } = position.data;
       <span class="text-sm">For privacy, exact dates and details aren't provided on my public résumé</span>
     </div>
 
-    <div class="flex flex-row gap-3">
-      <div class="jobs">
-        {
-          titles[0].end 
-            ? (<>
-              <span class="job-period">
-                {titles[0].start}
-              </span>
-              <span class="job-period">
-                — {titles[0].end}
-              </span>
-            </>)
-            : (<>
-              <span class="job-span">
-                {titles[0].start}
-              </span>
-            </>)
-        }
-        <span class="job-divider mb-1">•</span>
-        <h1 class="font-header text-xl text-mist job-title mb-1">
-          {titles[0].name}
-        </h1>
-        {
-          titles.length > 1 &&
-            titles.slice(1).map((title) => (
-              <>
-                {
-                  title.end 
-                    ? (<>
-                      <span class="job-period">
-                        {title.start}
-                      </span>
-                      <span class="job-period">
-                        — {title.end}
-                      </span>
-                    </>)
-                    : (<>
-                      <span class="job-span">
-                        {title.start}
-                      </span>
-                    </>)
-                }
-              </>
-              
-              <span class="job-divider text-lg">·</span>
-              <h2 class="font-header job-title">{title.name}</h2>
-            ))
-        }
-      </div>
-      <h1 class="font-header text-xl text-mist mt-0.5">
-        @ {company}
-      </h1>
-    </div>
+    <JobTitles titles={titles} mainTitle={mainTitleStyle} offTitle={offTitleStyle} />
 
     <div class="max-w-prose">
+      <div class="flex flex-col gap-1 pt-2 md:flex-row md:gap-3">
+        <h3 class="flex-shrink-0 text-mist">Sector:</h3>
+        <span class="text-orchid">{sector}</span>
+      </div>
       <div class="flex flex-col gap-1 pt-2 md:flex-row md:gap-3">
         <h3 class="flex-shrink-0 text-mist">Technologies:</h3>
         <div class="flex flex-wrap gap-2">
@@ -117,29 +84,5 @@ const { titles, company, techs, skills } = position.data;
       </MarkdownContent>
     </div>
   </div>
-  <Footer class="mt-20 mb-12" />
+  <Footer class="mb-12 mt-20" />
 </MainLayout>
-
-<style>
-  .jobs {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    @apply text-lg max-w-max gap-x-1;
-  }
-  .jobs .job-title {
-    height: 32px;
-    @apply self-end;
-  }
-  .jobs .job-divider {
-    height: 35px;
-    @apply translate-y-1 justify-self-center self-center mx-2;
-  }
-  .jobs .job-period {
-    height: 35px;
-    @apply translate-y-1;
-  }
-  .jobs .job-span {
-    height: 35px;
-    @apply translate-y-1 col-span-2;
-  }
-</style>

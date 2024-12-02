@@ -1,0 +1,43 @@
+---
+import JobTitlesItem from "./JobTitlesItem.astro";
+
+interface Title {
+  name: string;
+  start: string;
+  end?: string;
+}
+
+interface RowStyle {
+  dateClassName: string;
+  divider: string | undefined;
+  dividerClassName: string | undefined;
+  titleClassName: string;
+}
+
+interface Props {
+  titles: Title[];
+  mainTitle: RowStyle;
+  offTitle: RowStyle;
+}
+
+const { titles, mainTitle, offTitle } = Astro.props;
+---
+
+<div class="job-titles">
+  <JobTitlesItem title={titles[0]} style={mainTitle} />
+  {titles.slice(1).map((title) => <JobTitlesItem title={title} style={offTitle} />)}
+  {
+    Astro.slots.has("default") && (
+      <div class="col-span-5 col-start-1 md:col-span-1 md:col-start-5">
+        <slot />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .job-titles {
+    @apply grid w-fit gap-x-1;
+    grid-template-columns: repeat(4, min-content) auto;
+  }
+</style>

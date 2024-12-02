@@ -1,0 +1,37 @@
+---
+interface Title {
+  name: string;
+  start: string;
+  end?: string;
+}
+
+interface RowStyle {
+  dateClassName: string;
+  divider: string | undefined;
+  dividerClassName: string | undefined;
+  titleClassName: string;
+}
+
+interface Props {
+  title: Title;
+  style: RowStyle;
+}
+
+const { title, style } = Astro.props;
+---
+
+{
+  title.end ? (
+    <>
+      <span class:list={[style.dateClassName, "block text-end"]}>{title.start}</span>
+      <span class:list={[style.dateClassName, "block text-center"]}>—</span>
+      <span class:list={[style.dateClassName, "block text-start"]}>{title.end}</span>
+    </>
+  ) : (
+    <>
+      <span class:list={[style.dateClassName, "col-span-3 block text-center"]}>{title.start}</span>
+    </>
+  )
+}
+<span class:list={[style.dividerClassName, "block text-center"]}>{style.divider}</span>
+<span class:list={[style.titleClassName, "title"]}>{title.name}</span>

@@ -1,4 +1,6 @@
 ---
+import JobTitles from "./JobTitles.astro";
+
 interface Title {
   name: string;
   start: string;
@@ -15,62 +17,34 @@ interface Props {
 }
 
 const { titles, company, techs, skills, summaries, slug } = Astro.props;
+
+const mainTitleStyle = {
+  dateClassName: "text-mist font-header",
+  divider: "·",
+  dividerClassName: "",
+  titleClassName: "link-text text-mist font-header",
+};
+
+const offTitleStyle = {
+  dateClassName: "text-smoke text-sm",
+  divider: "·",
+  dividerClassName: "",
+  titleClassName: "text-smoke text-sm",
+};
 ---
 
 <a
   href={"/resume/" + slug}
   data-umami-event="resume-entry"
   data-umami-event-entry={slug}
-  class="link-not-text group/job-item grid grid-cols-12 gap-2 rounded-md px-6 py-5 transition-all hover:bg-lavender/5 hover:!opacity-100 group-hover/job-history:opacity-50 motion-reduce:group-hover/job-history:opacity-100"
+  class="link-not-text group/job-item relative block rounded-md px-6 py-5 transition-all hover:bg-lavender/5 hover:!opacity-100 group-hover/job-history:opacity-50 motion-reduce:group-hover/job-history:opacity-100"
 >
-  <div class="col-span-3">
-    <div class="flex h-[26px] font-header">
-      <span class="job-period-start">
-        {titles[0].start}
-      </span>
-      {
-        titles[0].end && (
-          <>
-            <span class="job-divider">— </span>
-            <span class="job-period-end">{titles[0].end}</span>
-          </>
-        )
-      }
-    </div>
-    {
-      titles.slice(1).map((title) => (
-        <div class="flex text-sm">
-          <span class="job-period-start">{title.start}</span>
-          {title.end && (
-            <>
-              <span class="job-divider">— </span>
-              <span class="job-period-end">{title.end}</span>
-            </>
-          )}
-        </div>
-      ))
-    }
-  </div>
-  <div class="col-span-9">
-    <div class="flex h-[26px] flex-row gap-2 font-header">
-      <div class="link-text flex-1 text-mist">
-        {titles[0].name}
-      </div>
-      <span
-        class="group-hover/job-item:text-gradient-r px-2 py-0.5 transition-transform group-hover/job-item:translate-x-1 group-hover/job-item:from-lavender group-hover/job-item:to-orchid motion-reduce:group-hover/job-item:translate-x-0"
-      >
-        →
-      </span>
-    </div>
-    {
-      titles.length > 1 && (
-        <div class="text-sm">
-          {titles.slice(1).map((title) => (
-            <div>{title.name}</div>
-          ))}
-        </div>
-      )
-    }
+  <span
+    class="group-hover/job-item:text-gradient-r absolute right-4 top-4 px-2 py-0.5 font-header transition-transform group-hover/job-item:translate-x-1 group-hover/job-item:from-lavender group-hover/job-item:to-orchid motion-reduce:group-hover/job-item:translate-x-0"
+  >
+    →
+  </span>
+  <JobTitles titles={titles} mainTitle={mainTitleStyle} offTitle={offTitleStyle}>
     <ul class="job-summary flex flex-col gap-1 pb-2 pt-1" role="list">
       {summaries.map((summary) => <li>{summary}</li>)}
     </ul>
@@ -87,7 +61,7 @@ const { titles, company, techs, skills, summaries, slug } = Astro.props;
           ))
       }
     </ul>
-  </div>
+  </JobTitles>
 </a>
 
 <style>

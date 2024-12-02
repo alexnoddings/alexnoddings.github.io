@@ -10,7 +10,7 @@ const resume = defineCollection({
         end: z.string().optional(),
       }),
     ),
-    company: z.string(),
+    sector: z.string(),
     techs: z.array(z.string()),
     skills: z.array(z.string()).optional(),
     summaries: z.array(z.string()),

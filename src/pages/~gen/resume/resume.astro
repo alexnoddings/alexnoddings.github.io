@@ -15,11 +15,11 @@ const default_config = {
     name: "University",
   },
   summer1: {
-    company: "Industry",
+    company: "Manufacturing",
     period: "Summer 2017",
   },
   summer23: {
-    company: "Industry",
+    company: "Industrial services",
     period: "Summer 2018/19",
   },
   grad: {
@@ -28,7 +28,7 @@ const default_config = {
     end: "2021",
   },
   consultancy: {
-    company: "Consultancy",
+    company: "Software consultancy",
     junior: {
       start: "2021",
       end: "2021",
@@ -151,7 +151,7 @@ const config = pdf_config ?? default_config;
                 <h5 class="title title-previous">Junior Developer</h5>
               </div>
             </div>
-            <h4 class="company">@ {config.consultancy.company ?? "Consultancy"}</h4>
+            <h4 class="company">@ {config.consultancy.company}</h4>
           </div>
           <ul class="info">
             <li>Architecting and leading agile delivery of high quality, bespoke experiences for clients</li>
@@ -182,7 +182,7 @@ const config = pdf_config ?? default_config;
               </h4>
               <h4 class="title">Graduate Developer</h4>
             </div>
-            <h4 class="company">@ {config.grad.company ?? "Engineering"}</h4>
+            <h4 class="company">@ {config.grad.company}</h4>
           </div>
           <ul class="info">
             <li>Migrated internal systems from an EoL version of Access to a new SQL backend</li>
@@ -209,7 +209,7 @@ const config = pdf_config ?? default_config;
               </h4>
               <h4 class="title">Summer Placement Developer</h4>
             </div>
-            <h4 class="company">@ {config.summer23.company ?? "Engineering"}</h4>
+            <h4 class="company">@ {config.summer23.company}</h4>
           </div>
           <ul class="info">
             <li>Developing existing desktop applications using C# & WPF</li>
@@ -233,7 +233,7 @@ const config = pdf_config ?? default_config;
               </h4>
               <h4 class="title">Service Desk Analyst</h4>
             </div>
-            <h4 class="company">@ {config.grad.company ?? "Industry"}</h4>
+            <h4 class="company">@ {config.summer1.company}</h4>
           </div>
           <ul class="info">
             <li>
