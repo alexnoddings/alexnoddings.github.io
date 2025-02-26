@@ -1,6 +1,6 @@
 ---
 // Import the site.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
+// all pages through the use of the <Head /> component.
 import "@styles/site.css";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -15,6 +15,7 @@ const image = "/meta/og.png";
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/meta/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
