@@ -1,6 +1,6 @@
 ![site logo](public/meta/android-chrome-192x192.png)
 
-# alexnoddings.com
+# [alexnoddings.com](https://alexnoddings.com)
 My personal website, built with [Astro](https://astro.build/).
 
 ### Running locally
