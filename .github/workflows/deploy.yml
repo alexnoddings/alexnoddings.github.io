@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Build static files
+        run: |
+          rm -rf src/pages/~gen
+          
       - name: Build site
         uses: withastro/action@v2
 
