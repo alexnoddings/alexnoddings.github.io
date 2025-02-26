@@ -16,12 +16,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Build static files
-        run: |
-          chmod +x build-static-files.sh
-          ./build-static-files.sh
-          
       - name: Build site
         uses: withastro/action@v2
 
