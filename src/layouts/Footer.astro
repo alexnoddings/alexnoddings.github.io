@@ -1,8 +1,8 @@
 ---
-import Link from "./Link.astro";
+import Link from "@components/Link.astro";
 import type { HTMLAttributes } from "astro/types";
-import LinkIcon from "../components/LinkIcon.astro";
-import GitHubIcon from "../components/icons/GitHubIcon.astro";
+import LinkIcon from "@components/LinkIcon.astro";
+import GitHubIcon from "@components/icons/GitHubIcon.astro";
 
 type Props = HTMLAttributes<"div">;
 
@@ -35,7 +35,7 @@ const { class: className, ...props } = Astro.props;
     data-umami-event-site="github"
     data-umami-event-loc="footer"
   >
-    <span class="sr-only">Look at this site's source code on GitHub</span>
+    <span class="sr-only">Check out this site's source code on GitHub</span>
     <GitHubIcon class="inline" width={22} height={22} />
   </LinkIcon>
 </footer>

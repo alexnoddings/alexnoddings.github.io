@@ -1,374 +1,173 @@
 ---
-import EmailIcon from "../../../components/icons/EmailIcon.astro";
-import GitHubIcon from "../../../components/icons/GitHubIcon.astro";
-import LinkedInIcon from "../../../components/icons/LinkedInIcon.astro";
-import RegionIcon from "../../../components/icons/RegionIcon.astro";
-import WebIcon from "../../../components/icons/WebIcon.astro";
-import { pdf_config } from "./pdf-config";
-import "../../../styles/site.css";
+import EmailIcon from "@components/icons/EmailIcon.astro";
+import GitHubIcon from "@components/icons/GitHubIcon.astro";
+import LinkedInIcon from "@components/icons/LinkedInIcon.astro";
+import LocationIcon from "@components/icons/LocationIcon.astro";
+import WebIcon from "@components/icons/WebIcon.astro";
+import Link from "@components/resume/Link.astro";
+import Role from "@components/resume/Role.astro";
+import ListInline from "@components/resume/ListInline.astro";
+import ListInfo from "@components/resume/ListInfo.astro";
+import HighlightProject from "@components/resume/HighlightProject.astro";
+import "@styles/site.css";
+import { cfg } from "./pdf-config.local";
 
-const default_config = {
-  isPublic: true,
-  region: "United Kingdom",
-  emailAddress: "hello@alexnoddings.com",
-  university: {
-    name: "University",
-  },
-  summer1: {
-    company: "Manufacturing",
-    period: "Summer 2017",
-  },
-  summer23: {
-    company: "Industrial services",
-    period: "Summer 2018/19",
-  },
-  grad: {
-    company: "Engineering",
-    start: "2020",
-    end: "2021",
-  },
-  consultancy: {
-    company: "Software consultancy",
-    junior: {
-      start: "2021",
-      end: "2021",
-    },
-    mid: {
-      start: "2021",
-      end: "2023",
-    },
-    senior: {
-      start: "2023",
-      end: "2024",
-    },
-    principal: {
-      start: "2024",
-      end: "Now",
-    },
-  },
-};
-
-const config = pdf_config ?? default_config;
+// Config schema for pdf-config.local.ts:
+// const cfg = {
+//   name: "Alex Noddings",
+//   tag: "Software Engineer",
+//   intro: ["Hello there"],
+//   meta: {
+//     location: "United Kingdom",
+//     web: {
+//       text: "alexnoddings.com",
+//       href: "https://alexnoddings.com/",
+//     },
+//     email: {
+//       text: "me@example.com",
+//       href: "mailto:me@example.com",
+//     },
+//     github: {
+//       text: "alexnoddings",
+//       href: "https://github.com/alexnoddings",
+//     },
+//     linkedin: {
+//       text: "alexnoddings",
+//       href: "https://linkedin.com/in/alexnoddings",
+//     },
+//   },
+//   education: [
+//     {
+//       establishment: "University",
+//       start: "",
+//       end: "",
+//       desc: "Computer Science",
+//     },
+//   ],
+//   roles: [
+//     {
+//       titles: [
+//         { title: "Now", start: "Then", end: "Now", period: undefined },
+//         { title: "Previous", start: "Donkies", end: "Then" },
+//       ],
+//       company: "Company",
+//       details: ["Responsibility #1", "Responsibility #2"],
+//     },
+//     {
+//       titles: [{ title: "First Role", period: "Ages ago" }],
+//       company: "Other Company",
+//       details: ["Responsibility #1", "Responsibility #2"],
+//     },
+//   ],
+//   summary: {
+//     languages: ["C#", "Others"],
+//     frameworks: [".NET", "Others"],
+//     tools: ["GitHub", "Others"],
+//     softskills: ["Leadership", "Management"],
+//   },
+//   loves: {
+//     professional: ["Being professional"],
+//     personal: ["Being personal"],
+//   },
+//   highlights: [
+//     {
+//       title: "This site",
+//       links: [{ title: "github", href: "https://github.com/alexnoddings/alexnoddings.github.io" }],
+//       desc: "blahblah",
+//     },
+//   ],
+// };
 ---
 
 <!doctype html>
 <html lang="en">
   <head></head>
-  <body class="mx-10 mb-6 mt-12 flex flex-col gap-4 font-body text-pdf-base text-slate">
-    <h1>Alex Noddings</h1>
-    <div class="-mt-4 flex flex-row gap-6">
+  <body class="mx-6 mb-6 mt-8 flex flex-col gap-4 font-body text-pdf-base text-slate">
+    <div class="flox-row flex">
+      <h1 class="me-auto">{cfg.name}</h1>
+      <h2 class="-mt-0.5 me-2 text-slate">//</h2>
+      <h2>{cfg.tag}</h2>
+    </div>
+    <div class="-mt-2 flex flex-row gap-6">
       <div class="w-2/3">
-        <h2>Principal Software Engineer</h2>
-        <div class="mt-2 pr-16">
-          <p>
-            Skilled full-stack developer architecting and leading the development of complex business systems
-            in .NET.
-          </p>
-          <p class="mt-1">
-            I'm passionate about delivering high quality, bespoke experiences for users by empowering the team
-            around me and driving technical evolution.
-          </p>
-        </div>
+        {
+          cfg.intro && (
+            <div class="mt-2 pr-11">
+              {cfg.intro.map((para) => (
+                <p class="my-1">{para}</p>
+              ))}
+            </div>
+          )
+        }
       </div>
       <div class="w-1/3 pt-2">
         <ul class="links-list">
-          <li>
-            <span>
-              <RegionIcon width={14} height={14} />
-              <span>{config.region}</span>
-            </span>
-          </li>
-          <li>
-            <a href="https://alexnoddings.com/?utm_source=resume&utm_content=website">
-              <WebIcon width={14} height={14} />
-              <span>alexnoddings.com</span>
-            </a>
-          </li>
+          {cfg.meta.location && <Link icon={LocationIcon} text={cfg.meta.location} />}
           {
-            config.emailAddress != null && (
-              <li>
-                <a href={"mailto:" + config.emailAddress}>
-                  <EmailIcon width={14} height={14} />
-                  <span>{config.emailAddress}</span>
-                </a>
-              </li>
+            cfg.meta.github && (
+              <Link icon={GitHubIcon} text={cfg.meta.github.text} href={cfg.meta.github.href} />
             )
           }
-          <li>
-            <a href="https://github.com/alexnoddings">
-              <GitHubIcon width={14} height={14} />
-              <span>github.com/alexnoddings</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://linkedin.com/in/alexnoddings">
-              <LinkedInIcon width={14} height={14} />
-              <span>linkedin.com/in/alexnoddings</span>
-            </a>
-          </li>
+          {
+            cfg.meta.linkedin && (
+              <Link icon={LinkedInIcon} text={cfg.meta.linkedin.text} href={cfg.meta.linkedin.href} />
+            )
+          }
+          {
+            cfg.meta.website && (
+              <Link icon={WebIcon} text={cfg.meta.website.text} href={cfg.meta.website.href} />
+            )
+          }
+          {cfg.meta.email && <Link icon={EmailIcon} text={cfg.meta.email.text} href={cfg.meta.email.href} />}
         </ul>
       </div>
     </div>
     <div class="flex flex-row gap-6">
       <div class="panel-left w-2/3">
         <h3>Experience</h3>
-        {
-          config.isPublic && (
-            <p class="public-privacy">
-              For privacy, exact dates and details aren't provided on my public resume
-            </p>
-          )
-        }
-        <div class="job">
-          <div class="titles">
-            <div class="flex flex-row gap-2">
-              <div class="flex flex-col">
-                <h4 class="period">
-                  <span class="period-start">{config.consultancy.principal.start}</span>
-                  <span class="period-divider">-</span>
-                  <span class="period-end">{config.consultancy.principal.end}</span>
-                </h4>
-                <h5 class="period period-previous">
-                  <span class="period-start">{config.consultancy.senior.start}</span>
-                  <span class="period-divider">-</span>
-                  <span class="period-end">{config.consultancy.senior.end}</span>
-                </h5>
-                <h5 class="period period-previous">
-                  <span class="period-start">{config.consultancy.mid.start}</span>
-                  <span class="period-divider">-</span>
-                  <span>{config.consultancy.mid.end}</span>
-                </h5>
-                <h5 class="period period-previous">
-                  <span class="period-start">{config.consultancy.junior.start}</span>
-                  <span class="period-divider">-</span>
-                  <span class="period-end">{config.consultancy.junior.end}</span>
-                </h5>
-              </div>
-              <div>
-                <h4 class="title">Principal Software Engineer</h4>
-                <h5 class="title title-previous">Senior Developer</h5>
-                <h5 class="title title-previous">Developer</h5>
-                <h5 class="title title-previous">Junior Developer</h5>
-              </div>
-            </div>
-            <h4 class="company">@ {config.consultancy.company}</h4>
-          </div>
-          <ul class="info">
-            <li>Architecting and leading agile delivery of high quality, bespoke experiences for clients</li>
-            <li>
-              Collaborating with a range of stakeholders to discover business requirements and opportunities
-              for innovation
-            </li>
-            <li>
-              Defining short through long-term technology strategies, creating robust guidelines for ensuring
-              software quality, and leading their adoption
-            </li>
-            <li>
-              Providing leadership across the team, driving technical evolution, and constantly striving to
-              improve our processes and workflows
-            </li>
-            <li>Empowering the development team and acting as the escalation path for technical issues</li>
-            <li>Running interviews for new hires, and designing/managing our technical test process/site</li>
-            <li>Supporting existing and legacy systems to ensure clients face minimal disruption</li>
-          </ul>
-        </div>
-        <div class="job">
-          <div class="titles">
-            <div class="flex flex-row gap-2">
-              <h4 class="period">
-                <span class="period-start">{config.grad.start}</span>
-                <span class="period-divider">-</span>
-                <span class="period-end">{config.grad.end}</span>
-              </h4>
-              <h4 class="title">Graduate Developer</h4>
-            </div>
-            <h4 class="company">@ {config.grad.company}</h4>
-          </div>
-          <ul class="info">
-            <li>Migrated internal systems from an EoL version of Access to a new SQL backend</li>
-            <li>
-              Optimised their existing database, unlocking up to 100x performance benefits on complex,
-              long-running queries
-            </li>
-            <li>Independently identified manual processes across the business which could be automated</li>
-            <li>
-              Abstracted an existing piece of embedded software to run in a simulation, allowing engineers to
-              more rapidly prototype alterations and changes to the product and control code
-            </li>
-            <li>
-              Trained engineers in Python scripting to help them automate tasks and better design their
-              embedded code
-            </li>
-          </ul>
-        </div>
-        <div class="job">
-          <div class="titles">
-            <div class="flex flex-row gap-2">
-              <h4 class="period">
-                {config.summer23.period}
-              </h4>
-              <h4 class="title">Summer Placement Developer</h4>
-            </div>
-            <h4 class="company">@ {config.summer23.company}</h4>
-          </div>
-          <ul class="info">
-            <li>Developing existing desktop applications using C# & WPF</li>
-            <li>Designing and creating internal web systems in C#, ASP.NET Core, & Blazor on Azure</li>
-            <li>Meeting with customers from across the business to identify requirements</li>
-            <li>
-              Collaborated with other developers to produce high-quality systems to streamline business
-              processes
-            </li>
-            <li>
-              Ported a 20+ year old Access/VB system to SQL Server to cut load times from tens of minutes to
-              tens of seconds
-            </li>
-          </ul>
-        </div>
-        <div class="job">
-          <div class="titles">
-            <div class="flex flex-row gap-2">
-              <h4 class="period">
-                {config.summer1.period}
-              </h4>
-              <h4 class="title">Service Desk Analyst</h4>
-            </div>
-            <h4 class="company">@ {config.summer1.company}</h4>
-          </div>
-          <ul class="info">
-            <li>
-              Worked with users from across the globe to quickly and efficiently resolve technical issues
-            </li>
-            <li>
-              Managed Windows systems, remotely triaged issues, and administrated their Active Directory
-            </li>
-            <li>
-              Worked with other Analysts and Technical Engineers to triage and solve business issues quickly
-            </li>
-            <li>
-              Created a bespoke Python system to vastly improve access to Knowledge Base documents for other
-              Analysts
-            </li>
-          </ul>
-        </div>
+        {cfg.roles.map((role) => <Role role={role} />)}
       </div>
 
       <div class="panel-right w-1/3">
         <h3>At a glance</h3>
-        <h4>Programming languages</h4>
-        <ul class="inline-list">
-          <li>C#</li>
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>SQL</li>
-          <li>Type/JavaScript</li>
-        </ul>
 
-        <h4>Frameworks and libraries</h4>
-        <ul class="inline-list">
-          <li>.NET</li>
-          <li>Blazor (WASM & Server)</li>
-          <li>ASP.NET Core</li>
-          <li>EF Core</li>
-          <li>SQL Server</li>
-          <li>Azure Functions</li>
-          <li>React</li>
-        </ul>
+        <h4>Programming languages</h4>
+        <ListInline items={cfg.summary.languages} />
+
+        <h4>Soft skills</h4>
+        <ListInfo items={cfg.summary.softskills} />
 
         <h4>Tools and processes</h4>
-        <ul class="inline-list">
-          <li>Azure DevOps</li>
-          <li>CI/CD</li>
-          <li>Azure Cloud</li>
-          <li>Git</li>
-          <li>Agile</li>
-          <li>Docker</li>
-          <li>Linux</li>
-          <li>GitHub</li>
-        </ul>
+        <ListInline items={cfg.summary.tools} />
 
-        <h4>Skills</h4>
-        <ul class="info">
-          <li>Project leadership</li>
-          <li>Technical management</li>
-          <li>Requirement scoping</li>
-          <li>Stakeholder communication</li>
-        </ul>
+        <h4>Frameworks and libraries</h4>
+        <ListInline items={cfg.summary.frameworks} />
 
         <h3>What I love</h3>
 
         <h4>Professionally</h4>
-        <ul class="info">
-          <li>Delivering quality, robust systems</li>
-          <li>Learning from and teaching colleagues</li>
-          <li>Continuing professional development</li>
-          <li>Driving technical evolution</li>
-        </ul>
+        <ListInfo items={cfg.loves.professional} />
 
         <h4>Personally</h4>
-        <ul class="inline-list">
-          <li>Music</li>
-          <li>Long walks</li>
-          <li>Video games</li>
-          <li>Cheese</li>
-          <li>Tabletop RPGs</li>
-          <li>Sci-Fi</li>
-          <li>Surreal comedies</li>
-          <li>Keeping active</li>
-        </ul>
+        <ListInline items={cfg.loves.personal} />
 
         <h3>Highlight projects</h3>
-        <h4>
-          Tyne
-          <a href="https://github.com/alexnoddings/Tyne" class="mx-1 ms-2 font-normal text-slate underline">
-            github</a
-          >
-          <a
-            href="https://alexnoddings.github.io/Tyne/docs/index.html"
-            class="mx-1 font-normal text-slate underline">docs</a
-          >
-          <a href="https://alexnoddings.github.io/Tyne/demo/" class="mx-1 font-normal text-slate underline"
-            >demo
-          </a>
-        </h4>
-        <p>
-          An extensive library of .NET packages designed around making line-of-business Blazor apps more
-          efficiently and securely.
-        </p>
-        <h4>
-          alexnoddings.com
-          <a
-            href="https://alexnoddings.com/?utm_source=resume&utm_content=projects"
-            class="mx-1 ms-2 font-normal text-slate underline"
-          >
-            site</a
-          >
-          <a
-            href="https://github.com/alexnoddings/alexnoddings.github.io/"
-            class="mx-1 font-normal text-slate underline">github</a
-          >
-        </h4>
-        <p>
-          My personal website - part resume, part portfolio. Created with Tailwind CSS and Astro, and
-          responsible for generating this document!
-        </p>
-        <h4>
-          Quibble
-          <a href="https://github.com/alexnoddings/Quibble" class="mx-1 ms-2 font-normal text-slate underline"
-            >github
-          </a>
-        </h4>
-        <p>
-          Interactive real-time quiz website built using Blazor and SignalR on ASP.NET Core. Initially
-          designed during Covid for game nights with friends, and occasionally resurrected since.
-        </p>
+        {cfg.projects.map((project) => <HighlightProject project={project} />)}
 
         <h3>Education</h3>
-        <h4 class="flex flex-row items-center gap-3">
-          <span>{config.university.name}</span>
-          <span class="text-pdf-sm font-normal text-slate"> 2017 - 2020</span>
-        </h4>
-        <p>First Class Honours Bachelor of Science in Computer Science</p>
+        {
+          cfg.education.map((education) => (
+            <>
+              <h4 class="flex flex-row items-center gap-3">
+                <span class="me-auto">{education.establishment}</span>
+                <span class="text-pdf-sm font-normal text-slate">
+                  {education.start} - {education.end}
+                </span>
+              </h4>
+              <p>{education.desc}</p>
+            </>
+          ))
+        }
       </div>
     </div>
   </body>
@@ -389,51 +188,6 @@ const config = pdf_config ?? default_config;
     @apply tracking-wide text-charcoal;
   }
 
-  .public-privacy {
-    @apply -mt-2 mb-3 italic;
-  }
-
-  /* Jobs */
-  .job .titles {
-    @apply my-0.5 flex flex-row items-start gap-2;
-  }
-
-  .job .titles .title {
-    @apply text-pdf-base font-bold text-charcoal;
-  }
-
-  .job .titles .title-previous {
-    @apply text-pdf-sm font-normal text-slate;
-  }
-
-  .job .titles .period {
-    @apply text-slate;
-  }
-  .job .titles .period-previous {
-    @apply text-pdf-sm;
-  }
-  .job .titles .period .period-start {
-    @apply inline-block text-end;
-    min-width: 36px;
-  }
-  .job .titles .period .period-end {
-    @apply inline-block;
-    min-width: 32px;
-  }
-  .job .titles .period .period-divider {
-    @apply inline-block text-center;
-    min-width: 10px;
-  }
-
-  .job ul.info {
-    @apply mb-4 mt-1 flex flex-col gap-0.5 pl-2;
-  }
-
-  .job ul.info li::before {
-    content: "-";
-    @apply mr-1;
-  }
-
   /* Panels */
   .panel-right h3:first-of-type {
     @apply mt-0;
@@ -445,28 +199,7 @@ const config = pdf_config ?? default_config;
     @apply mb-0.5 mt-2 font-bold;
   }
 
-  /* Links list */
   ul.links-list {
     @apply flex flex-col gap-1.5;
-  }
-  ul.links-list li * {
-    @apply flex flex-row gap-1;
-  }
-  ul.links-list li svg {
-    @apply fill-slate;
-  }
-
-  /* Inline list */
-  ul.inline-list {
-    @apply flex flex-row flex-wrap;
-  }
-  ul.inline-list li {
-  }
-  ul.inline-list li::after {
-    content: ",";
-    @apply mr-1.5;
-  }
-  ul.inline-list li:last-child::after {
-    content: none;
   }
 </style>

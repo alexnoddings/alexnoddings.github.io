@@ -1,25 +1,29 @@
 ---
+import GitHubIcon from "@components/icons/GitHubIcon.astro";
+
 interface Props {
   title: string;
   techs: string[];
   href: string;
 }
 
-const { title, techs, href } = Astro.props;
+const { title, techs, href, ...props } = Astro.props;
 ---
 
 <a
   href={href}
   class="link-not-text group/project-item flex flex-col gap-2 rounded-md px-6 py-5 transition-all hover:bg-lavender/5 hover:!opacity-100 group-hover/projects:opacity-50 motion-reduce:group-hover/projects:opacity-100"
+  {...props}
 >
   <div class="flex flex-row gap-2 font-header">
     <div class="link-text flex-1 text-mist">
       {title}
     </div>
     <span
-      class="group-hover/project-item:text-gradient-r px-2 py-0.5 transition-transform group-hover/project-item:translate-x-1 group-hover/project-item:from-lavender group-hover/project-item:to-orchid motion-reduce:group-hover/project-item:translate-x-0"
+      class="flex items-center gap-1 px-2 py-0.5 transition-transform group-hover/project-item:translate-x-1 group-hover/project-item:text-orchid motion-reduce:group-hover/project-item:translate-x-0"
     >
-      →
+      <GitHubIcon class="fill-smoke group-hover/project-item:fill-orchid" width={18} height={18} />
+      <span>↗</span>
     </span>
   </div>
   <slot />

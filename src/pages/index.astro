@@ -1,131 +1,56 @@
 ---
-import { getCollection } from "astro:content";
-import JobHistoryItem from "../components/JobHistoryItem.astro";
-import Link from "../components/Link.astro";
-import ColumnsLayout from "../layouts/ColumnsLayout.astro";
-import Footer from "../components/Footer.astro";
-import ProjectItem from "../components/ProjectItem.astro";
+import Footer from "@layouts/Footer.astro";
+import About from "@components/index/IndexAbout.astro";
+import Experience from "@components/index/IndexExperience.astro";
+import Projects from "@components/index/IndexProjects.astro";
+import Summary from "@components/index/IndexSummary.astro";
+import Socials from "@components/index/IndexSocials.astro";
 
-const positions = (await getCollection("resume")).sort((pos1, pos2) => pos2.data.id - pos1.data.id);
+import Link from "@components/Link.astro";
+import MainLayout from "@layouts/MainLayout.astro";
+
+const links = [
+  { title: "About me", href: "#about" },
+  { title: "Experience", href: "#experience" },
+  { title: "Projects", href: "#projects" },
+];
 ---
 
-<ColumnsLayout
-  links={[
-    { title: "About", href: "#about" },
-    { title: "Résumé", href: "#resume" },
-    { title: "Projects", href: "#projects" },
-  ]}
->
-  <section id="about" class="leading-loose lg:pt-20">
-    <h2 class="font-header text-lg text-mist">About me</h2>
-    <p class="mb-6 mt-2">
-      I wrote my first lines of code back in 2011 in
-      <Link
-        href="https://www.lua.org/about.html"
-        data-umami-event="external-link"
-        data-umami-event-site="lua"
-      >
-        Lua
-      </Link>
-       using modding tools available for
-      <Link
-        href="https://wiki.facepunch.com/gmod/Beginner_Tutorial_Intro"
-        data-umami-event="external-link"
-        data-umami-event-site="gmod"
-      >
-        Garry's Mod
-      </Link>
-       and
-      <Link href="https://tweaked.cc/" data-umami-event="external-link" data-umami-event-site="computercraft">
-        Minecraft
-      </Link>. Being given the reigns to create whatever I could imagine got me hooked on programming.
-    </p>
-    <p class="mb-6">
-      Fast forward to today, and I'm passionate about delivering high quality, bespoke experiences for users
-      by empowering the team around me and driving technical evolution. I architect and lead the agile
-      development of complex business systems at a British software consultancy.
-    </p>
-    <p>
-      When I'm not clicking away at my desk, I enjoy long walks, a cracking bit of cheese, videogames,
-      Sci-Fis, tabletop RPGs, surreal comedies, and listening to music. Actually, I listen to a lot of music
-      at my desk too.
-    </p>
-  </section>
-  <section id="resume" class="pt-10 lg:pt-20">
-    <h2 class="flex-1 font-header text-lg text-mist">Résumé</h2>
-    <p class="mt-2 text-sm">For privacy, exact dates and details aren't provided on my public résumé.</p>
-    <p class="text-sm">
-      I also have a
-      <Link href="resume/alexnoddings.pdf" data-umami-event="resume-pdf" data-umami-event-source="view-pdf">
-        PDF version available
-      </Link>
-       if that's your jam.
-    </p>
-    <ol class="group/job-history mt-4 flex flex-col">
-      {
-        positions.map((position) => (
-          <li>
-            <JobHistoryItem
-              titles={position.data.titles}
-              techs={position.data.techs}
-              skills={position.data.skills}
-              summaries={position.data.summaries}
-              slug={position.slug}
-            />
-          </li>
-        ))
-      }
-    </ol>
-    <div class="mt-3 flex justify-center">
-      <a
-        href="resume/alexnoddings.pdf"
-        data-umami-event="resume-pdf"
-        data-umami-event-source="view-detailed"
-        class="hover:text-gradient-r link-not-text group px-3 py-1 text-mist hover:from-turquoise hover:to-lavender"
-      >
-        <span class="link-text">View PDF résumé</span>
-        <span class="ml-1 font-header"> →</span>
-      </a>
-    </div>
-  </section>
-  <section id="projects" class="mt-8">
-    <h2 class="mb-4 font-header text-lg text-mist">Projects</h2>
-    <ol class="group/projects mt-4 flex flex-col">
-      <li>
-        <ProjectItem
-          title="Tyne"
-          techs={[".NET", "Blazor", "ASP.NET Core", "Entity Framework Core", "NuGet"]}
-          href="https://github.com/alexnoddings/Tyne"
-          data-umami-event="project"
-          data-umami-event-name="tyne"
-        >
-          A set of C# packages designed to make line-of-business apps in Blazor more efficiently.
-        </ProjectItem>
-      </li>
-      <li>
-        <ProjectItem
-          title="alexnoddings.com"
-          techs={["Astro", "Tailwind", "HTML/CSS"]}
-          href="https://github.com/alexnoddings/alexnoddings.github.io/"
-          data-umami-event="project"
-          data-umami-event-name="alexnoddings.com"
-        >
-          This website! Part résumé, part portfolio. Created with Tailwind CSS and Astro.
-        </ProjectItem>
-      </li>
-      <li>
-        <ProjectItem
-          title="Quibble"
-          techs={[".NET", "Blazor WASM", "SignalR", "ASP.NET Core", "Entity Framework Core"]}
-          href="https://github.com/alexnoddings/Quibble"
-          data-umami-event="project"
-          data-umami-event-name="quibble"
-        >
-          Interactive real-time quiz website using Blazor and SignalR. Built and used during Covid for game
-          nights with friends.
-        </ProjectItem>
-      </li>
-    </ol>
-  </section>
-  <Footer class="mt-20" />
-</ColumnsLayout>
+<MainLayout>
+  <div class="flex flex-col gap-2 lg:flex-row lg:gap-8">
+    <header
+      class="sticky flex w-full shrink-0 flex-col gap-2 pb-6 pt-12 lg:top-0 lg:max-h-screen lg:w-[400px] lg:py-20"
+    >
+      <Summary />
+      <div>
+        {
+          links != null && links.length > 0 && (
+            <ul class="flex flex-row justify-center lg:mt-12 lg:flex-col">
+              {links.map(({ title, href }) => (
+                <li class="w-fit">
+                  <Link class="column-link" href={href}>
+                    {title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      <Socials />
+    </header>
+    <main class="flex w-full flex-col gap-2 pb-20">
+      <About />
+      <Experience />
+      <Projects />
+      <Footer class="mt-20" />
+    </main>
+  </div>
+
+  <style>
+    .column-link {
+      @apply block px-6 py-4 transition-transform lg:hover:ps-8;
+      transition-property: padding;
+    }
+  </style>
+</MainLayout>

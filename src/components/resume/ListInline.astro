@@ -1,0 +1,26 @@
+---
+interface Props {
+    items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="inline-list">
+    {items.map((item) => <li>{item}</li>)}
+</ul>
+
+<style>
+    ul.inline-list {
+        @apply flex flex-row flex-wrap;
+    }
+    ul.inline-list li {
+    }
+    ul.inline-list li::after {
+        content: ",";
+        @apply mr-1.5;
+    }
+    ul.inline-list li:last-child::after {
+        content: none;
+    }
+</style>

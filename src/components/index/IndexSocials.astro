@@ -1,0 +1,37 @@
+---
+import EmailIcon from "@components/icons/EmailIcon.astro";
+import LinkIcon from "@components/LinkIcon.astro";
+import GitHubIcon from "@components/icons/GitHubIcon.astro";
+import LinkedInIcon from "@components/icons/LinkedInIcon.astro";
+---
+
+<div class="mx-auto flex flex-row gap-2 lg:mx-0 lg:mt-auto lg:pt-4">
+    <LinkIcon
+        class="p-1"
+        href="https://github.com/alexnoddings"
+        data-umami-event="profile-link"
+        data-umami-event-site="github"
+        data-umami-event-loc="socials"
+    >
+        <span class="sr-only">Look at my GitHub</span>
+        <GitHubIcon />
+    </LinkIcon>
+    <LinkIcon
+        class="p-1"
+        href="https://www.linkedin.com/in/alexnoddings/"
+        data-umami-event="profile-link"
+        data-umami-event-site="linkedin"
+    >
+        <span class="sr-only">Connect with me on LinkedIn</span>
+        <LinkedInIcon />
+    </LinkIcon>
+    <LinkIcon
+        class="p-1"
+        href="mailto:hello@alexnoddings.com"
+        data-umami-event="contact"
+        data-umami-event-type="email"
+    >
+        <span class="sr-only">Get in touch via email</span>
+        <EmailIcon />
+    </LinkIcon>
+</div>

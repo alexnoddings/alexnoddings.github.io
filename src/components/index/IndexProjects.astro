@@ -1,0 +1,48 @@
+---
+import ProjectItem from "@components/ProjectItem.astro";
+---
+
+<section id="projects" class="pt-10 lg:pt-16">
+    <h2 class="mb-4 font-header text-lg text-mist">Projects</h2>
+    <p>
+        A few public projects I've worked on. Most of the code I write is for entirely closed source projects
+        at work.
+    </p>
+    <ol class="group/projects mt-4 flex flex-col">
+        <li>
+            <ProjectItem
+                title="Tyne"
+                techs={[".NET", "Blazor WASM", "HTML", "ASP.NET Core", "Entity Framework Core", "NuGet"]}
+                href="https://github.com/alexnoddings/Tyne"
+                data-umami-event="project"
+                data-umami-event-name="tyne"
+            >
+                A set of C# packages designed to make line-of-business apps in Blazor more efficiently.
+            </ProjectItem>
+        </li>
+        <li>
+            <ProjectItem
+                title="alexnoddings.com"
+                techs={["Astro", "Tailwind", "HTML/CSS"]}
+                href="https://github.com/alexnoddings/alexnoddings.github.io/"
+                data-umami-event="project"
+                data-umami-event-name="alexnoddings.com"
+            >
+                This website! Part résumé, part portfolio, part CV generator. Created with Astro and Tailwind
+                CSS.
+            </ProjectItem>
+        </li>
+        <li>
+            <ProjectItem
+                title="Quibble"
+                techs={[".NET", "Blazor WASM", "SignalR", "ASP.NET Core", "Entity Framework Core", "Docker"]}
+                href="https://github.com/alexnoddings/Quibble"
+                data-umami-event="project"
+                data-umami-event-name="quibble"
+            >
+                Interactive real-time quiz website using Blazor and SignalR. Built and used during Covid for
+                game nights with friends, and resurrected once in a blue moon since.
+            </ProjectItem>
+        </li>
+    </ol>
+</section>

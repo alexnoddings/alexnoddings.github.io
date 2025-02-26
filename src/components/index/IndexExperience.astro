@@ -1,0 +1,27 @@
+---
+import JobHistoryItem from "@components/jobs/JobHistoryItem.astro";
+
+import { getCollection } from "astro:content";
+
+const positions = (await getCollection("resume")).sort((pos1, pos2) => pos2.data.id - pos1.data.id);
+---
+
+<section id="experience" class="pt-10 lg:pt-16">
+    <h2 class="flex-1 font-header text-lg text-mist">Experience</h2>
+    <p class="mt-2 text-sm">For privacy, exact dates and details aren't provided on my public site.</p>
+    <ol class="group/job-history mt-4 flex flex-col">
+        {
+            positions.map((position) => (
+                <li>
+                    <JobHistoryItem
+                        titles={position.data.titles}
+                        techs={position.data.techs}
+                        skills={position.data.skills}
+                        summaries={position.data.summaries}
+                        slug={position.slug}
+                    />
+                </li>
+            ))
+        }
+    </ol>
+</section>

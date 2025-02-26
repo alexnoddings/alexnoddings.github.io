@@ -19,11 +19,6 @@ done
 echo "Astro started."
 curl http://localhost:4321/~gen/og/og.png -o ./public/meta/og.png
 
-if ! test -e ./public/resume/; then
-    mkdir ./public/resume/
-fi
-curl http://localhost:4321/~gen/resume/resume.pdf -o ./public/resume/alexnoddings.pdf
-
 favicons=( 
     "android-chrome-512x512.png"
     "android-chrome-192x192.png"

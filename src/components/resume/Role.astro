@@ -1,0 +1,108 @@
+---
+interface JobTitle {
+    title: string;
+    start?: string;
+    end?: string;
+    period?: string;
+}
+
+interface JobRole {
+    titles: JobTitle[];
+    company: string;
+    details: string[];
+}
+
+interface Props {
+    role: JobRole;
+}
+
+const { role } = Astro.props;
+---
+
+<div class="job">
+    <div class="titles">
+        <div class="flex flex-row gap-2">
+            <div class="flex flex-col">
+                <h4 class="period">
+                    {
+                        role.titles[0].period ? (
+                            <>{role.titles[0].period}</>
+                        ) : (
+                            <>
+                                <span class="period-start">{role.titles[0].start}</span>
+                                <span class="period-divider">-</span>
+                                <span class="period-end">{role.titles[0].end}</span>
+                            </>
+                        )
+                    }
+                </h4>
+                {
+                    role.titles.length > 1 &&
+                        role.titles.slice(1).map((title) => (
+                            <h5 class="period period-previous">
+                                <span class="period-start">{title.start}</span>
+                                <span class="period-divider">-</span>
+                                <span class="period-end">{title.end}</span>
+                            </h5>
+                        ))
+                }
+            </div>
+            <div>
+                <h4 class="title">{role.titles[0].title}</h4>
+                {
+                    role.titles.length > 1 &&
+                        role.titles
+                            .slice(1)
+                            .map((title) => <h5 class="title title-previous">{title.title}</h5>)
+                }
+            </div>
+        </div>
+        <h4 class="company">@ {role.company}</h4>
+    </div>
+    <ul class="info">
+        {role.details.map((detail) => <li>{detail}</li>)}
+    </ul>
+</div>
+
+<style>
+    /* Jobs */
+    .job .titles {
+        @apply my-0.5 flex flex-row items-start gap-2;
+    }
+
+    .job .titles .title {
+        @apply text-pdf-base font-bold text-charcoal;
+    }
+
+    .job .titles .title-previous {
+        @apply text-pdf-sm font-normal text-slate;
+    }
+
+    .job .titles .period {
+        @apply text-slate;
+    }
+    .job .titles .period-previous {
+        @apply text-pdf-sm;
+    }
+    .job .titles .period .period-start {
+        @apply inline-block text-end;
+        min-width: 36px;
+    }
+    .job .titles .period .period-end {
+        @apply inline-block;
+        min-width: 32px;
+    }
+    .job .titles .period .period-divider {
+        @apply inline-block text-center;
+        min-width: 10px;
+    }
+
+    .job ul.info {
+        @apply mb-4 mt-1 flex flex-col gap-0.5 pl-2;
+    }
+
+    .job ul.info li::before {
+        content: "-";
+        @apply mr-1;
+    }
+</style>

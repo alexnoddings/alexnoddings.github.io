@@ -1,5 +1,5 @@
 ---
-import JobTitlesItem from "./JobTitlesItem.astro";
+import JobTitlesItem from "@components/jobs/JobTitlesItem.astro";
 
 interface Title {
   name: string;
@@ -23,12 +23,14 @@ interface Props {
 const { titles, mainTitle, offTitle } = Astro.props;
 ---
 
-<div class="job-titles">
-  <JobTitlesItem title={titles[0]} style={mainTitle} />
-  {titles.slice(1).map((title) => <JobTitlesItem title={title} style={offTitle} />)}
+<div class="w-fit">
+  <div class="job-titles">
+    <JobTitlesItem title={titles[0]} style={mainTitle} />
+    {titles.slice(1).map((title) => <JobTitlesItem title={title} style={offTitle} />)}
+  </div>
   {
     Astro.slots.has("default") && (
-      <div class="col-span-5 col-start-1 md:col-span-1 md:col-start-5">
+      <div class="mt-1 border-t-2 border-smoke/20 md:col-span-5 md:col-start-1">
         <slot />
       </div>
     )
@@ -37,7 +39,7 @@ const { titles, mainTitle, offTitle } = Astro.props;
 
 <style>
   .job-titles {
-    @apply grid w-fit gap-x-1;
-    grid-template-columns: repeat(4, min-content) auto;
+    @apply grid gap-x-2;
+    grid-template-columns: repeat(5, max-content);
   }
 </style>

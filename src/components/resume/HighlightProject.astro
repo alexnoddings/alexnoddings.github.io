@@ -1,0 +1,43 @@
+---
+interface Link {
+    text: string;
+    href: string;
+}
+
+interface Project {
+    title: string;
+    links: Link[];
+    desc: string;
+}
+
+interface Props {
+    project: Project;
+}
+
+const { project } = Astro.props;
+const { title, links, desc } = project;
+---
+
+<h4>
+    <span class="me-auto">
+        {title}
+    </span>
+    {
+        links.map((link) => (
+            <a href={link.href} class="mx-1 ms-2 font-normal text-slate underline">
+                {link.text}
+            </a>
+        ))
+    }
+</h4>
+<p>
+    {desc}
+</p>
+
+<style>
+    h4 {
+        @apply tracking-wide text-charcoal;
+        @apply mb-0.5 mt-2 font-bold;
+        @apply flex;
+    }
+</style>
